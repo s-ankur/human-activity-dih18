@@ -35,20 +35,6 @@ def try_to(f, args=None, kwargs=None, max_try='inf', exceptions=(KeyError,ValueE
                     print(e)
                 raise
 
-import glob
-
-def load_images(folder,size=(48,48),mode='color'):
-    files = glob.glob(os.path.join(folder,'*'))
-    x_train=[]
-    for file in files:
-        image = imread(file,mode)
-        image = Color.convert(image,'rgb')
-        gray=cv2.resize(image,size)
-        x_train.append(gray)
-    x_train=np.array(x_train)
-    x_train=x_train.reshape(len(x_train),size[0],size[1],1 if mode=='gray' else 3)    
-    return x_train 
-
 
 
 

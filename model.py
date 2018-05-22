@@ -1,7 +1,8 @@
 from cnn2d import * 
 from config import *
 
-model=cnn_model(input_shape=SIZE+(3,),num_classes=2)
+actions=glob.glob(os.path.join(IMAGE_PATH,'*'))
+model=cnn_model(input_shape=SIZE+(3,),num_classes=len(actions))
 model.compile(optimizer='adam', loss='categorical_crossentropy',metrics=['accuracy'])
 
 def load_model():
