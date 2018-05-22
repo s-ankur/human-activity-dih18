@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import to_categorical
  
+actions=glob.glob(os.path.join(IMAGE_PATH,'*'))
 
 
 

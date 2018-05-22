@@ -1,9 +1,7 @@
 from utility.cv_utils import *
 from config import *
-import glob
-import os
 
-actions=glob.glob(os.path.join(ACTION_PATH,'*'))
+
 
 def load_data(categories=actions,size=SIZE,mode=MODE):
     training_data = []
