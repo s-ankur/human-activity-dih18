@@ -14,7 +14,9 @@ for action in actions:
     video_names=glob.glob('*')
     for video_name in video_names:
         video=Video(video_name)
+        image_id=0
         for frame in video:
             if CHANCE>random():
-                imwrite(action.replace(VIDEO_PATH,IMAGE_PATH),frame)
+                imwrite(str(image_id)+'_'+action.replace(VIDEO_PATH,IMAGE_PATH),frame)
+                image_id+=1
                 
