@@ -1,23 +1,12 @@
-from keras.layers import Input, Dense, Lambda, Flatten, Reshape
-from keras.layers import Conv2D, Conv2DTranspose
-from keras.layers import Input, Dense, Conv2D, MaxPooling2D, UpSampling2D
-from keras.models import Model
-from keras import regularizers
 from config import *
 
-
-from keras import layers
-from keras.layers import Activation, Conv2D
-from keras.layers import BatchNormalization
-from keras.layers import GlobalAveragePooling2D
-from keras.layers import Input
-from keras.layers import MaxPooling2D
-from keras.layers import SeparableConv2D
+from keras.layers import Input, Dense, Lambda, Flatten, Reshape
+from keras.layers import Activation, Conv2D,GlobalAveragePooling2D,BatchNormalization,SeparableConv2D,MaxPooling2D
 from keras.models import Model
 from keras.regularizers import l2
 
 
-def cnn_model(input_shape, num_classes, l2_regularization=0.01):
+def cnn2d_model(input_shape, num_classes, l2_regularization=0.01):
     regularization = l2(l2_regularization)
     img_input = Input(input_shape)
 
