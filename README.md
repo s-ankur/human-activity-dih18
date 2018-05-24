@@ -10,3 +10,6 @@ Do the following
  4. run fit.py to make a model from the images
  
 
+TODO:
+ 1. Actually run this thing
+ 2. Add 3D CNN god knows how (plz find good link)
