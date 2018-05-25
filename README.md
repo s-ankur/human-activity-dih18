@@ -11,5 +11,5 @@ Do the following
  
 
 TODO:
- 1. Actually run this thing
- 2. Add 3D CNN god knows how (plz find good link)
+ - [] Actually run this thing
+ - [] Add 3D CNN god knows how (plz find good link)
