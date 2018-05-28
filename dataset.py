@@ -3,7 +3,7 @@ from config import *
 
 
 
-def load_data(categories=actions,size=SIZE,mode=MODE):
+def load_data(categories,size=SIZE,mode=MODE):
     training_data = []
     training_labels = []
     for label,category in enumerate(categories):
