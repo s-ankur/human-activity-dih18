@@ -30,7 +30,7 @@ def fit(X,y):
 
 
 try:
-    X,y=load_data()
+    X,y=load_data(categories)
     print('X.shape:', X.shape)
     print('y.shape:', y.shape)
     fit(X,y)
