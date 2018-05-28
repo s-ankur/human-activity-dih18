@@ -1,4 +1,5 @@
 from config import *
+from keras import layers
 
 from keras.layers import Input, Dense, Lambda, Flatten, Reshape
 from keras.layers import Activation, Conv2D,GlobalAveragePooling2D,BatchNormalization,SeparableConv2D,MaxPooling2D
