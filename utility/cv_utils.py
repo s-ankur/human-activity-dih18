@@ -99,14 +99,17 @@ class Video:
     def read(self):
         ret, image = self.input_video.read()
         if not ret:
-            raise HardwareError("Camera Wire Pulled")
+            raise ValueError("Videostream Not Working/ Existing")
         if self.bbox is not None:
             image,bbox=imcrop(image,bbox=self.bbox)
         return image
 
     def __iter__(self):
-        while True:
-            yield self.read()
+        try:
+            while True:
+                yield self.read()
+        except ValueError:
+            return 
 
     def __enter__(self):
         return self
