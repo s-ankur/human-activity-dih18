@@ -429,10 +429,7 @@ def load_images(folder,size=(48,48),mode='color'):
     x_train=[]
     for file in files:
         image = imread(file,mode)
-<<<<<<< HEAD
-=======
         image = Color.convert(image,'rgb')
->>>>>>> cc95c1550a048d96b6e1af4ab6761d3d71c4cf6e
         gray=cv2.resize(image,size)
         x_train.append(gray)
     x_train=np.array(x_train)
