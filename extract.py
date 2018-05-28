@@ -4,19 +4,24 @@ import os,glob
 from random import random
 
 
-actions=glob.glob(os.path.join(VIDEO_PATH,'*'))
+action_names=glob.glob(os.path.join(VIDEO_PATH,'*'))
 try:
     os.mkdir(IMAGE_PATH)
 except:pass
 
-for action in actions:
-    os.mkdir(action.replace(VIDEO_PATH,IMAGE_PATH))
-    video_names=glob.glob('*')
+for action_name in action_names:
+    try:
+        os.mkdir(action_name.replace(VIDEO_PATH,IMAGE_PATH))
+    except:
+        pass
+    video_names=glob.glob(os.path.join(action_name,'*'))
     for video_name in video_names:
         video=Video(video_name)
         image_id=0
         for frame in video:
             if CHANCE>random():
-                imwrite(str(image_id)+'_'+action.replace(VIDEO_PATH,IMAGE_PATH),frame)
+                image_name=os.path.join(action_name.replace(VIDEO_PATH,IMAGE_PATH),str(image_id)+'.jpg')
+                print(image_name)
+                imwrite(image_name,frame)
                 image_id+=1
                 
