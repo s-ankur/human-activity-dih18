@@ -425,10 +425,10 @@ def umeyama( src, dst, estimate_scale ):
     return T
 
 
-import glob,os
+import os
 
 def load_images(folder,size=(48,48),mode='color'):
-    files = glob.glob(os.path.join(folder,'*'))
+    files = os.listdir(folder)
     x_train=[]
     for file in files:
         image = imread(file,mode)
