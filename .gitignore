@@ -5,3 +5,6 @@ __pycache__/
 *.jpg
 *.png
 *.jpeg
+images
+clips
+video
