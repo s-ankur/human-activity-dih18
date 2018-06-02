@@ -1,5 +1,4 @@
-#!/usr/bin/python3
-import numpy
+import numpy as np
 from config import *
 from model import *
 from dataset import *

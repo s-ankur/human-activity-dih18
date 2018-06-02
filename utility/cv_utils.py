@@ -425,7 +425,7 @@ def umeyama( src, dst, estimate_scale ):
     return T
 
 
-import os
+import os,glob
 
 def load_images(folder,size=(48,48),mode='color'):
     files = os.listdir(folder)
@@ -438,5 +438,9 @@ def load_images(folder,size=(48,48),mode='color'):
     x_train=np.array(x_train)
     x_train=x_train.reshape(len(x_train),size[0],size[1],1 if mode=='gray' else 3)    
     return x_train 
+
+def listdirp(directory):
+    return glob.glob(os.path.join(directory, "*"))
+
 
 
