@@ -15,12 +15,6 @@ def extract():
             os.mkdir(destination_directory)
         image_id=0
         for video_path in video_paths:
-            video=Video(video_path)            
-            for frame in video:
-                if CHANCE>random():
-                    image_path=os.path.join(destination_directory,str(image_id)+'.jpg')
-                    print(image_path)
-                    imwrite(image_path,frame)
-                    image_id+=1
+            video=Video(video_path)      
 
 

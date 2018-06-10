@@ -1,8 +1,9 @@
+
 import numpy as np
 from config import *
 from model import *
 from dataset import *
-from sklearn.model_selection import train_test_split
+from sklearn.cross_validation import train_test_split
 from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import to_categorical
  
