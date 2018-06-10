@@ -1,4 +1,5 @@
-import numpy
+
+import numpy as np
 from config import *
 from model import *
 from dataset import *
@@ -28,10 +29,12 @@ def fit(X,y):
 
 
 
-try:
-    X,y=load_data(categories)
-    print('X.shape:', X.shape)
-    print('y.shape:', y.shape)
-    fit(X,y)
-finally:
-    save_model()
+if __name__=="__main__":
+    try:
+
+        X,y=load_data(categories)
+        print('X.shape:', X.shape)
+        print('y.shape:', y.shape)
+        fit(X,y)
+    finally:
+        save_model()
