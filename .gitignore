@@ -5,6 +5,7 @@ __pycache__/
 *.jpg
 *.png
 *.jpeg
+*.mkv
 images
 clips
 video
