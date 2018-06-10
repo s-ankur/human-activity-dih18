@@ -7,7 +7,7 @@ import os
 
 
 VIDEO_PATH = 'video'
-CHANCE=.001
+CHANCE=.1
 
 
 
@@ -16,7 +16,7 @@ SIZE = (48,48)
 MODE = 'color'
 IMAGE_PATH = 'images'
 BATCH_SIZE = 50
-EPOCHS = 40
+EPOCHS = 20
 
 
 
