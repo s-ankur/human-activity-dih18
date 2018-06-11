@@ -10,7 +10,7 @@ def extract():
     for category_name in category_names:
         source_directory = os.path.join(VIDEO_PATH,category_name)
         destination_directory = os.path.join(IMAGE_PATH,category_name)
-        video_paths=listdirp(source_directory)
+        video_paths=listdir(source_directory)
         if not os.path.isdir(destination_directory):
             os.mkdir(destination_directory)
         image_id=0
