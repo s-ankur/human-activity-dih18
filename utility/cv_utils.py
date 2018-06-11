@@ -120,6 +120,10 @@ class Video:
     def __del__(self):
         self.release()
 
+    def __len__(self):
+        return int(self.input_video.get(cv2.CAP_PROP_FRAME_COUNT))
+        
+
 def imshow(image,window_name='image',hold=False,):
     if not hold:
         cv2.namedWindow( window_name )
