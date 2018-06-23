@@ -11,9 +11,9 @@ from keras.utils import np_utils
 
 def fit3d(X,y):
     y = np_utils.to_categorical(y,len(categories) )
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
 
-    model.fit(X_train, y_train,
+    model.fit(X_train, y_train,validation_data=(X_test,y_test),
                         epochs=EPOCHS, verbose=1)
 
 
