@@ -9,5 +9,5 @@ __pycache__/
 *.avi
 images
 clips
-video
+videos
 *.h5py
