@@ -1,6 +1,7 @@
 from utility.cv_utils import *
+from config3d import *
 
-def load_data3d(categories,size=SIZE,mode=MODE):
+def load_data3d(categories,size=SIZE3D,mode=MODE):
     training_data = []
     training_labels = []
     for label,category in enumerate(categories):
