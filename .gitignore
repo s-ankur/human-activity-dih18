@@ -10,4 +10,4 @@ __pycache__/
 images
 clips
 videos
-*.h5py
+*.h5
