@@ -1,40 +1,33 @@
  
 import numpy as np
 from config import *
-from model import *
-from dataset import *
+from model3d import *
+from dataset3d import *
 from sklearn.model_selection import train_test_split
 from keras.preprocessing.image import ImageDataGenerator
-from keras.utils import to_categorical
- 
+from keras.utils import np_utils
 
 
 
-def fit(X,y):
-    y=to_categorical(y)
+def fit3d(X,y):
+    y = np_utils.to_categorical(y,len(categories) )
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
-    data_generator = ImageDataGenerator(
-                        featurewise_center=False,
-                        featurewise_std_normalization=False,
-                        rotation_range=10,
-                        width_shift_range=0.1,
-                        height_shift_range=0.1,
-                        zoom_range=.1,
-                        horizontal_flip=True)
 
-    model.fit_generator(data_generator.flow(X_train, y_train,BATCH_SIZE),
-                        steps_per_epoch=len(X_train) / BATCH_SIZE,
-                        epochs=EPOCHS, verbose=1, 
-                        validation_data=(X_test,y_test))
+    model.fit(X_train, y_train,
+                        epochs=EPOCHS, verbose=1)
 
 
 
 if __name__=="__main__":
     try:
 
-        X,y=load_data(categories)
+        X,y=load_data3d(categories)
+        X=np.array(X.transpose((0, 2, 3, 4, 1)))
+        X=X.reshape((X.shape[0], *SIZE3D, 3, 3))
+        
+        
         print('X.shape:', X.shape)
         print('y.shape:', y.shape)
-        fit(X,y)
+        fit3d(X,y)
     finally:
         save_model()

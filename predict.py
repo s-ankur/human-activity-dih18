@@ -3,6 +3,7 @@ from model import *
 from utility.cv_utils import *
 import sys
 import numpy as np
+
 video=Video(sys.argv[1])
 for frame in video:
 	frame=cv2.resize(frame,SIZE)
