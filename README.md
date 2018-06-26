@@ -11,3 +11,4 @@ Do the following
  5. View online prediction using predict[3d].py <filename> . Leave blank to use webcam
 
 To use 3d convnet do the above steps with 3d.py files
+DTCWT completely uselesss

@@ -1,8 +1,9 @@
 import dtcwt
 import dtcwt.registration as registration
 import numpy as np
-import matplotlib.pyplot as plt
 from utility.cv_utils import *
+
+import matplotlib.pyplot as plt
 import sys
 
 transform2d = dtcwt.Transform2d()
@@ -20,30 +21,33 @@ transform2d = dtcwt.Transform2d()
 
 
 
-a = cv2.resize(imread(sys.argv[1]),(256,256))
-b = cv2.resize(imread(sys.argv[2]),(256,256))
+a = cv2.resize(imread(sys.argv[1]),(512,512))
+b = cv2.resize(imread(sys.argv[2]),(512,512))
 a = im2gray(a)
 b = im2gray(b)
 
 
 def transform_dtcwt(ref, src):
+    step=4
     ref_t = transform2d.forward(ref, nlevels=4)
     src_t = transform2d.forward(src, nlevels=4)
     reg = registration.estimatereg(src_t, ref_t)
     vxs, vys = registration.velocityfield(reg, ref.shape[:2], method='bilinear')
-    vxs = vxs * ref.shape[1]
-    vys = vys * ref.shape[0]
-    mesh = np.abs(vxs + 1j * vys)
+    vxs -= np.median(vxs.flat)
+    vys -= np.median(vys.flat)
+    mesh = np.sqrt(vxs*vxs + vys * vys)
     return mesh
 
 
 c = transform_dtcwt(a, b)
+c*= (255/c.max())
+c=c.astype('int')
 
-#c[c < c.max() * .2] = 0
+c[c < c.max() * .2] = 0
 d = plt.imshow(c, cmap='hot')
 
 plt.colorbar(d)
 plt.figure()
-k = np.dstack([a, b, c * (255 / 7)])
+k = np.dstack([a, b, c ])
 plt.imshow(k.astype('int'))
 plt.show()
