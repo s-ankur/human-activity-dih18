@@ -4,7 +4,6 @@ import os
 from random import random
 
 fourcc = cv2.VideoWriter_fourcc(*"MPEG")
-
 category_names = os.listdir(VIDEO_PATH)
 if not os.path.isdir(CLIP_PATH):
     os.mkdir(CLIP_PATH)
@@ -21,13 +20,11 @@ for category_name in category_names:
         video = Video(video_path)
         while True:
             ret, frame = video.input_video.read()
-
             if not ret:
                 break
             frame = cv2.resize(frame, SIZE3D)
             if CHANCE > random():
                 clip_name = 'clips/' + os.path.join(category_name.replace(VIDEO_PATH, CLIP_PATH), str(clip_id) + '.avi')
-                # print(clip_name)
                 clip = cv2.VideoWriter(clip_name, fourcc, 5, SIZE3D, True)
                 clip_id += 1
                 delete = False
@@ -41,4 +38,4 @@ for category_name in category_names:
                 clip.release()
                 if delete:
                     os.unlink(clip_name)
-                    print("deleting incomplete clip", clip_name)
+                    print("Deleting incomplete clip", clip_name)

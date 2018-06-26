@@ -17,9 +17,6 @@ if __name__ == "__main__":
     try:
 
         X, y = load_data3d(categories)
-        X = np.array(X.transpose((0, 2, 3, 4, 1)))
-        X = X.reshape((X.shape[0], *SIZE3D, 3, 3))
-
         print('X.shape:', X.shape)
         print('y.shape:', y.shape)
         fit3d(X, y)

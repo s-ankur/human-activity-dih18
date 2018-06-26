@@ -16,6 +16,7 @@ def load_data3d(categories, size=SIZE3D, mode=MODE):
             frame_array = np.array(frame_array)
             training_data.append(frame_array)
             training_labels.append(label)
-    X_train = np.array(training_data)
+    X_train = np.array(training_data).transpose((0, 2, 3, 4, 1))
+    X_train = X_train.reshape((X_train.shape[0], *SIZE3D, 3, 3))
     y_train = np.array(training_labels)
     return X_train, y_train

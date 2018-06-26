@@ -1,11 +1,8 @@
-import numpy as np
-from config import *
 from model import *
 from dataset import *
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from keras.preprocessing.image import ImageDataGenerator
 from keras.utils import to_categorical
-import glob
 
 
 def fit(X, y):
@@ -22,7 +19,7 @@ def fit(X, y):
 
     model.fit_generator(data_generator.flow(X_train, y_train, BATCH_SIZE),
                         steps_per_epoch=len(X_train) / BATCH_SIZE,
-                        epochs=EPOCHS, verbose=1,
+                        epochs=EPOCHS, verbose=True,
                         validation_data=(X_test, y_test))
 
 

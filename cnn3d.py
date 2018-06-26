@@ -1,6 +1,5 @@
-from keras.layers import Activation, Conv3D, Input, Dense, Dropout, Flatten, MaxPooling3D
-from keras.layers import BatchNormalization
-from keras.models import Model, Sequential
+from keras.layers import Activation, Conv3D, Dense, Dropout, Flatten, MaxPooling3D
+from keras.models import Sequential
 
 
 def cnn3d_model(input_shape, num_classes):
