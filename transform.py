@@ -20,15 +20,15 @@ transform2d = dtcwt.Transform2d()
 
 
 
-a = imread(sys.argv[1])
-b = imread(sys.argv[2])
-a = a[:, :, 1]
-b = b[:, :, 1]
+a = cv2.resize(imread(sys.argv[1]),(256,256))
+b = cv2.resize(imread(sys.argv[2]),(256,256))
+a = im2gray(a)
+b = im2gray(b)
 
 
 def transform_dtcwt(ref, src):
-    ref_t = transform2d.forward(ref, nlevels=6)
-    src_t = transform2d.forward(src, nlevels=6)
+    ref_t = transform2d.forward(ref, nlevels=4)
+    src_t = transform2d.forward(src, nlevels=4)
     reg = registration.estimatereg(src_t, ref_t)
     vxs, vys = registration.velocityfield(reg, ref.shape[:2], method='bilinear')
     vxs = vxs * ref.shape[1]
@@ -39,15 +39,11 @@ def transform_dtcwt(ref, src):
 
 c = transform_dtcwt(a, b)
 
-c[c < c.max() * .2] = 0
+#c[c < c.max() * .2] = 0
 d = plt.imshow(c, cmap='hot')
 
 plt.colorbar(d)
 plt.figure()
 k = np.dstack([a, b, c * (255 / 7)])
 plt.imshow(k.astype('int'))
-plt.figure()
-plt.imshow(a)
-plt.figure()
-plt.imshow(b)
 plt.show()

@@ -8,6 +8,7 @@ __pycache__/
 *.jpeg
 *.mkv
 *.avi
+*.gif
 *.h5
 images
 clips
