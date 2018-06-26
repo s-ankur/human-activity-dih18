@@ -1,7 +1,5 @@
-from config import *
 from keras import layers
-
-from keras.layers import Input, Dense, Lambda, Flatten, Reshape
+from keras.layers import Input
 from keras.layers import Activation, Conv2D, GlobalAveragePooling2D, BatchNormalization, SeparableConv2D, MaxPooling2D
 from keras.models import Model
 from keras.regularizers import l2
@@ -95,7 +93,7 @@ def cnn2d_model(input_shape, num_classes, l2_regularization=0.01):
     x = layers.add([x, residual])
 
     x = Conv2D(num_classes, (3, 3),
-               # kernel_regularizer=regularization,
+               kernel_regularizer=regularization,
                padding='same')(x)
     x = GlobalAveragePooling2D()(x)
     output = Activation('softmax', name='predictions')(x)

@@ -2,6 +2,8 @@ import dtcwt
 import dtcwt.registration as registration
 import numpy as np
 import matplotlib.pyplot as plt
+from utility.cv_utils import *
+import sys
 
 transform2d = dtcwt.Transform2d()
 
@@ -16,8 +18,7 @@ transform2d = dtcwt.Transform2d()
 
 # quiver(X[::step,::step], Y[::step,::step],vxs[::step,::step], vys[::step,::step],color='g', angles='xy', scale_units='xy', scale=0.25)
 
-from utility.cv_utils import *
-import sys
+
 
 a = imread(sys.argv[1])
 b = imread(sys.argv[2])
