@@ -2,7 +2,7 @@ from config import *
 from keras import layers
 
 from keras.layers import Input, Dense, Lambda, Flatten, Reshape
-from keras.layers import Activation, Conv2D,GlobalAveragePooling2D,BatchNormalization,SeparableConv2D,MaxPooling2D
+from keras.layers import Activation, Conv2D, GlobalAveragePooling2D, BatchNormalization, SeparableConv2D, MaxPooling2D
 from keras.models import Model
 from keras.regularizers import l2
 
@@ -102,5 +102,3 @@ def cnn2d_model(input_shape, num_classes, l2_regularization=0.01):
 
     model = Model(img_input, output)
     return model
-
-
