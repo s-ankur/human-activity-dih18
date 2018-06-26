@@ -29,7 +29,7 @@ def bare_model(input_shape, num_classes, l2_regularization=0.01):
     residual = Flatten()(residual)
 
     output = Dense(num_classes)(residual)
-    output = Activation('softmax', name='predictions')(x)
+    output = Activation('softmax', name='predictions')(output)
 
     model = Model(img_input, output)
     return model
