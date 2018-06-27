@@ -32,9 +32,7 @@ def transform_dtcwt(ref, src):
     ref_t = transform2d.forward(ref, nlevels=4)
     src_t = transform2d.forward(src, nlevels=4)
     reg = registration.estimatereg(src_t, ref_t)
-    vxs, vys = registration.velocityfield(reg, ref.shape[:2], method='bilinear')
-    vxs -= np.median(vxs.flat)
-    vys -= np.median(vys.flat)
+    vxs, vys = registration.velocityfield(reg, ref.shape[:2], method='nearest')
     mesh = np.sqrt(vxs*vxs + vys * vys)
     return mesh
 

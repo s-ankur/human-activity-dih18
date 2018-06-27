@@ -2,7 +2,7 @@
 
 VIDEO_PATH = 'videos'
 IMAGE_PATH = 'images'
-CHANCE = .01
+CHANCE = .1
 MODEL_NAME = 'saved.h5'
 SIZE = (48, 48)
 SIZE3D = (200, 200)
