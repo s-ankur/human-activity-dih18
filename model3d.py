@@ -3,7 +3,7 @@ from cnn3d import cnn3d_model
 import glob, os
 
 categories = glob.glob(os.path.join(CLIP_PATH, '*'))
-model = cnn3d_model(input_shape=SIZE3D + (3, 3), num_classes=len(categories))
+model = cnn3d_model(input_shape=SIZE3D + (DEPTH, 3), num_classes=len(categories))
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 

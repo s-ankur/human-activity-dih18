@@ -28,7 +28,7 @@ for category_name in category_names:
                 clip = cv2.VideoWriter(clip_name, fourcc, 5, SIZE3D, True)
                 clip_id += 1
                 delete = False
-                for i in range(DEPTH):
+                for i in range(DEPTH+1):
                     ret, frame = video.input_video.read()
                     if ret:
                         frame = cv2.resize(frame, SIZE3D)

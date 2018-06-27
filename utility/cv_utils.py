@@ -27,7 +27,8 @@ def destroy_window(*args,**kwargs):
     cv2.waitKey(1)
     cv2.waitKey(1)
     cv2.waitKey(1)
-    cv2.waitKey(1)      
+    cv2.waitKey(1)
+    
 class Color:
     @staticmethod
     def convert( image ,color_to,color_from ='bgr',):
