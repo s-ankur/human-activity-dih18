@@ -2,6 +2,7 @@
 
 VIDEO_PATH = 'videos'
 CLIP_PATH = 'clips'
+RESULT_PATH='results'
 CHANCE = .01
 MODEL_NAME = 'saved3d.h5'
 DEPTH = 4
