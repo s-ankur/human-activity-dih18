@@ -3,7 +3,7 @@ import sys
 
 
 
-if  sys.argv[1]=='3d':
+if  len(sys.argv)==2 and sys.argv[1]=='3d':
   from model3d import *
 else:
   from model import *
