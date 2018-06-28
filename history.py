@@ -1,4 +1,9 @@
+import matplotlib.pyplot as plt
+import os
+
 def plot_history(history, result_dir):
+    if not os.path.isdir(result_dir):
+        os.mkdir(result_dir)
     plt.plot(history.history['acc'], marker='.')
     plt.plot(history.history['val_acc'], marker='.')
     plt.title('model accuracy')
