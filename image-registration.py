@@ -1,12 +1,10 @@
-from utility.cv_utils import *
 import logging
-from matplotlib.pyplot import *
 import numpy as np
-
-import dtcwt
 from dtcwt.numpy import Transform2d
-import dtcwt.sampling
 from dtcwt.registration import *
+from matplotlib.pyplot import *
+
+from utility.cv_utils import *
 
 logging.basicConfig(level=logging.INFO)
 

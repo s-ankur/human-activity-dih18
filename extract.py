@@ -1,9 +1,11 @@
-from utility.cv_utils import *
-from config import *
-import os, sys
-from random import random
-from keras.utils import generic_utils
+import sys
+
 import shutil
+from keras.utils import generic_utils
+from random import random
+
+from config import *
+from utility.cv_utils import *
 
 if __name__ == "__main__":
     try:

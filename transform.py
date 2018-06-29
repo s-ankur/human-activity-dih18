@@ -27,7 +27,6 @@ b = im2gray(b)
 
 
 def transform_dtcwt(ref, src):
-    step = 4
     ref_t = transform2d.forward(ref, nlevels=4)
     src_t = transform2d.forward(src, nlevels=4)
     reg = registration.estimatereg(src_t, ref_t)

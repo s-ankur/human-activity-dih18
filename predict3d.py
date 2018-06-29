@@ -1,9 +1,10 @@
+import sys
+
+import glob
+import numpy as np
+
 from model3d import *
 from utility.cv_utils import *
-import sys
-import numpy as np
-import glob
-import argparse
 
 if len(sys.argv) == 2:
     video_path = sys.argv[1]
