@@ -17,7 +17,8 @@ transform2d = dtcwt.Transform2d()
 # imshow(ref, cmap=cm.gray, clim=(0,1))
 # step = 8
 
-# quiver(X[::step,::step], Y[::step,::step],vxs[::step,::step], vys[::step,::step],color='g', angles='xy', scale_units='xy', scale=0.25)
+# quiver(X[::step,::step], Y[::step,::step],vxs[::step,:
+# :step], vys[::step,::step],color='g', angles='xy', scale_units='xy', scale=0.25)
 
 
 a = cv2.resize(imread(sys.argv[1]), (512, 512))

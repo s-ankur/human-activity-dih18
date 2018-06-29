@@ -9,12 +9,12 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 
 
 def load_model():
-    model.load_weights(MODEL_NAME)
+    model.load_weights(os.path.join(RESULT_PATH, MODEL_NAME))
     print('Loaded model successfully')
 
 
 def save_model():
-    model.save_weights(MODEL_NAME)
+    model.save_weights(os.path.join(RESULT_PATH, MODEL_NAME))
     print('Saved model successfully')
 
 

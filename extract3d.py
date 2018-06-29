@@ -1,7 +1,7 @@
 from utility.cv_utils import *
 from config3d import *
 import os
-from random import random
+import random
 
 fourcc = cv2.VideoWriter_fourcc(*"MPEG")
 category_names = os.listdir(VIDEO_PATH)
@@ -23,8 +23,8 @@ for category_name in category_names:
             if not ret:
                 break
             frame = cv2.resize(frame, SIZE3D)
-            if CHANCE > random():
-                clip_name = 'clips/' + os.path.join(category_name.replace(VIDEO_PATH, CLIP_PATH), str(clip_id) + '.avi')
+            if CHANCE > random.random():
+                clip_name = os.path.join(CLIP_PATH, category_name, str(clip_id) + '.avi')
                 clip = cv2.VideoWriter(clip_name, fourcc, 5, SIZE3D, True)
                 clip_id += 1
                 delete = False

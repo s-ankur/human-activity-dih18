@@ -3,8 +3,8 @@
 VIDEO_PATH = 'videos'
 CLIP_PATH = 'clips'
 RESULT_PATH = 'results3d'
-CHANCE = .01
 MODEL_NAME = 'saved3d.h5'
+CHANCE = .01
 DEPTH = 3
 SIZE3D = (64, 64)
 CHANNELS = 3
