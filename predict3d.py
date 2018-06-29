@@ -5,7 +5,6 @@ import numpy as np
 import glob
 import argparse
 
-
 if len(sys.argv) == 2:
     video_path = sys.argv[1]
 else:

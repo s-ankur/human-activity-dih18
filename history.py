@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import os
 
+
 def plot_history(history, result_dir):
     if not os.path.isdir(result_dir):
         os.mkdir(result_dir)
@@ -36,6 +37,4 @@ def save_history(history, result_dir):
         fp.write('epoch\tloss\tacc\tval_loss\tval_acc\n')
         for i in range(nb_epoch):
             fp.write('{}\t{}\t{}\t{}\t{}\n'.format(
-                i, loss[i], acc[i], val_loss[i], val_acc[i])) 
-
- 
+                i, loss[i], acc[i], val_loss[i], val_acc[i]))

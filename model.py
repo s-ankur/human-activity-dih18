@@ -1,6 +1,7 @@
 from config import *
 from cnn2d import cnn2d_model
-import glob, os
+import glob
+import os
 
 categories = glob.glob(os.path.join(IMAGE_PATH, '*'))
 

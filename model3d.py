@@ -1,6 +1,7 @@
 from config3d import *
 from cnn3d import cnn3d_model
-import glob, os
+import glob
+import os
 
 categories = glob.glob(os.path.join(CLIP_PATH, '*'))
 model = cnn3d_model(input_shape=SIZE3D + (DEPTH, 3), num_classes=len(categories))
