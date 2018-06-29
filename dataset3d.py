@@ -2,9 +2,9 @@ from utility.cv_utils import *
 from config3d import *
 
 
-def load_data3d(categories):
-    training_data = []
-    training_labels = []
+def load_data(categories):
+    data = []
+    labels = []
     for label, category in enumerate(categories):
         files = glob.glob(os.path.join(category, '*'))
         print("Category %s --- %d files" % (category, len(files)))
@@ -14,10 +14,11 @@ def load_data3d(categories):
             for frame in video:
                 frame_array.append(frame)
             frame_array = np.array(frame_array)
-            training_data.append(frame_array)
-            training_labels.append(label)
-    X_train = np.array(training_data).transpose((0, 2, 3, 4, 1))
-    print(X_train.shape)
-    X_train = X_train.reshape((X_train.shape[0], *SIZE3D, DEPTH, CHANNELS))
-    y_train = np.array(training_labels)
-    return X_train, y_train
+            data.append(frame_array)
+            labels.append(label)
+    X = np.array(data).transpose((0, 2, 3, 4, 1))
+    X = X.reshape((X.shape[0], *SIZE3D, DEPTH, CHANNELS))
+    y = np.array(labels)
+    print('X.shape:', X.shape)
+    print('y.shape:', y.shape)
+    return X, y
