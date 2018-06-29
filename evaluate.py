@@ -13,7 +13,7 @@ def plot_history(history, result_path):
         plt.xlabel('epoch')
         plt.ylabel('accuracy')
     plt.grid()
-    plt.legend(['acc', 'val_acc'], loc=',middle right')
+    plt.legend(['acc', 'val_acc'], loc='center right')
     plt.savefig(os.path.join(result_path, 'metrics.png'))
     plt.close()
 
@@ -24,7 +24,7 @@ def save_metrics(y_test, y_pred, result_path):
     y_test = np.argmax(y_test, axis=1)
     y_pred = np.argmax(y_pred, axis=1)
 
-    with open('classification_report') as file:
+    with open('classification_report','w') as file:
         file.write(sklearn.metrics.classification_report(y_test, y_pred, digits=5))
 
     confusion_matrix = sklearn.metrics.confusion_matrix(y_test, y_pred)
@@ -32,14 +32,11 @@ def save_metrics(y_test, y_pred, result_path):
     np.savetxt(os.path.join(result_path, "confusion_matrix.csv"), confusion_matrix, delimiter=",", fmt='%.4f')
 
     plt.imshow(confusion_matrix, interpolation='nearest', cmap='hot')
-    plt.colorbar()
-    tick_marks = np.arange(len(num_classes))
-    plt.xticks(tick_marks, num_classes, rotation=45)
-    plt.yticks(tick_marks, num_classes)
+    plt.colorbar() 
 
     for i, j in itertools.product(range(confusion_matrix.shape[0]), range(confusion_matrix.shape[1])):
         plt.text(j, i,
-                 format(confusion_matrix[i, j], '%2f'),
+                 '%.2f'%confusion_matrix[i, j], 
                  horizontalalignment="center",
                  color="white" if confusion_matrix[i, j] > .5 else "black")
 
