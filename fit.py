@@ -1,13 +1,11 @@
 from model import *
-from dataset import *
+from dataset import load_data
 from sklearn.model_selection import train_test_split
 from keras.preprocessing.image import ImageDataGenerator
-from keras.utils import to_categorical
 from evaluate import *
 
-
-def fit(X, y):
-    y = to_categorical(y)
+try:
+    X, y = load_data(categories)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_TRAIN_SPLIT, random_state=42)
     data_generator = ImageDataGenerator(
         featurewise_center=False,
@@ -23,12 +21,8 @@ def fit(X, y):
                                   verbose=True,
                                   callbacks=logger(RESULT_PATH),
                                   validation_data=(X_test, y_test))
+    y_pred = model.predict(X_test)
     plot_history(history.history, RESULT_PATH)
-
-
-if __name__ == "__main__":
-    try:
-        X, y = load_data(categories)
-        fit(X, y)
-    finally:
-        save_model()
+    save_metrics(y_test, y_pred, RESULT_PATH)
+finally:
+    save_model()

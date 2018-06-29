@@ -1,6 +1,5 @@
-from config import *
 from model3d import *
-from dataset3d import *
+from dataset3d import load_data
 from evaluate import *
 from sklearn.model_selection import train_test_split
 
@@ -12,6 +11,8 @@ try:
                         epochs=EPOCHS,
                         callbacks=logger(RESULT_PATH),
                         verbose=True)
+    y_pred = model.predict(X_test)
     plot_history(history.history, RESULT_PATH)
+    save_metrics(y_test, y_pred, RESULT_PATH)
 finally:
     save_model()
