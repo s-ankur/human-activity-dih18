@@ -15,12 +15,12 @@ TEST_TRAIN_SPLIT = .33
 
 ############### CONFIG ##############
 
+
 import os
 
-for variable in globals():
-    if variable.endswith('PATH'):
-        if not os.path.isdir(variable):
-            print("Creating directory ", variable)
-            os.mkdir(variable)
-        else:
-            print("Warning: Directory already exists", variable)
+for path in (CLIP_PATH, RESULT_PATH):
+    if not os.path.isdir(path):
+        print("Creating directory ", path)
+        os.mkdir(path)
+    else:
+        raise Warning("Directory already exists, Won't overwrite", path)

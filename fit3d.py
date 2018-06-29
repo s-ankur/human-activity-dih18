@@ -1,13 +1,11 @@
 from config import *
 from model3d import *
 from dataset3d import *
-from history import *
+from evaluate import *
 from sklearn.model_selection import train_test_split
-from keras.utils import np_utils
 
-
-def fit(X, y):
-    y = np_utils.to_categorical(y, len(categories))
+try:
+    X, y = load_data(categories)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_TRAIN_SPLIT, random_state=42)
     history = model.fit(X_train, y_train,
                         validation_data=(X_test, y_test),
@@ -15,11 +13,5 @@ def fit(X, y):
                         callbacks=logger(RESULT_PATH),
                         verbose=True)
     plot_history(history.history, RESULT_PATH)
-
-
-if __name__ == "__main__":
-    try:
-        X, y = load_data(categories)
-        fit(X, y)
-    finally:
-        save_model()
+finally:
+    save_model()

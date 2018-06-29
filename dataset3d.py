@@ -1,8 +1,11 @@
+from keras.utils import np_utils
 from utility.cv_utils import *
 from config3d import *
 
 
 def load_data(categories):
+    if len(categories) == 1:
+        raise ValueError("Cannot classify single class")
     data = []
     labels = []
     for label, category in enumerate(categories):
@@ -19,6 +22,7 @@ def load_data(categories):
     X = np.array(data).transpose((0, 2, 3, 4, 1))
     X = X.reshape((X.shape[0], *SIZE3D, DEPTH, CHANNELS))
     y = np.array(labels)
+    y = np_utils.to_categorical(y, len(categories))
     print('X.shape:', X.shape)
     print('y.shape:', y.shape)
     return X, y
