@@ -1,4 +1,4 @@
-###############     CONFIG ##############
+############### CONFIG ##############
 
 VIDEO_PATH = 'videos'
 CLIP_PATH = 'clips'
@@ -10,5 +10,6 @@ SIZE3D = (64, 64)
 MODE = 'color'
 BATCH_SIZE = 128
 EPOCHS = 30
+BACKGROUND_SUBTRACTION = False
 
-###############     CONFIG ##############
+############### CONFIG ##############
