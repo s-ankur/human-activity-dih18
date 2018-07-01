@@ -23,4 +23,4 @@ for path in (CLIP_PATH, RESULT_PATH):
         print("Creating directory ", path)
         os.mkdir(path)
     else:
-        raise Warning("Directory already exists, Won't overwrite", path)
+        print("Warning: Directory already exists, Won't overwrite", path)
