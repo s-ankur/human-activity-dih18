@@ -19,8 +19,6 @@ def plot_history(history, result_path):
 
 
 def save_metrics(y_test, y_pred, result_path):
-    num_classes = y_pred.shape[1]
-
     y_test = np.argmax(y_test, axis=1)
     y_pred = np.argmax(y_pred, axis=1)
 

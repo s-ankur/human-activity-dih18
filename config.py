@@ -16,11 +16,3 @@ TEST_TRAIN_SPLIT = .33
 ############### CONFIG ##############
 
 
-import os
-
-for path in (IMAGE_PATH, RESULT_PATH):
-    if not os.path.isdir(path):
-        print("Creating directory ", path)
-        os.mkdir(path)
-    else:
-        print("Directory already exists, Won't overwrite", path)

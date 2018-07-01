@@ -1,8 +1,4 @@
 import sys
-
-import glob
-import numpy as np
-
 from model3d import *
 from utility.cv_utils import *
 

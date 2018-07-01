@@ -4,7 +4,7 @@ from keras.models import Model
 from keras.regularizers import l2
 
 
-def bare_model(input_shape, num_classes, l2_regularization=0.01):
+def cnn2d_model(input_shape, num_classes, l2_regularization=0.01):
     regularization = l2(l2_regularization)
     img_input = Input(input_shape)
 
@@ -15,7 +15,7 @@ def bare_model(input_shape, num_classes, l2_regularization=0.01):
     x = Activation('relu')(x)
 
     x = Conv2D(8, (3, 3), strides=(1, 1),
-               kernel_regularizer=regularization,
+               kernel_l2_regularizationregularizer=regularization,
                use_bias=False)(x)
     x = BatchNormalization()(x)
     x = Activation('relu')(x)
