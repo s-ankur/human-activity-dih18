@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 from contextlib import contextmanager
 from logging import info
+from collections import defaultdict
 
 try:
     from .utils import *

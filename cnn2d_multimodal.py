@@ -5,10 +5,6 @@ from dtcwt.numpy import Transform2d
 import numpy as np
 
 
-def forward(X):
-    return
-
-
 def dtcwt_layer(input_shape):
     transform = Transform2d()
     f = lambda X: transform.forward(X, 2).lowpass
@@ -21,8 +17,8 @@ def dtcwt_layer(input_shape):
 
 
 def cnn2d_model(input_shape, num_classes):
-    x = Input(input_shape)
-    y = dtcwt_layer(input_shape)(x)
+    inp = Input(input_shape)
+    y = dtcwt_layer(input_shape)(inp)
 
     x = Conv2D(16, 3, 3, border_mode='same', input_shape=input_shape)(x)
     x = BatchNormalization()(x)
@@ -49,5 +45,5 @@ def cnn2d_model(input_shape, num_classes):
     x = Dense(num_classes)(x)
     x = Activation('softmax')(x)
 
-    model = Model(input_shape, x)
+    model = Model(inp, x)
     return model
