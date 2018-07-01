@@ -1,16 +1,38 @@
-from keras.layers import Dense, Dropout, Flatten, Input, Activation, Conv2D, BatchNormalization, MaxPooling2D
+from keras.layers import Dense, Dropout, Flatten, Input, Activation, Conv2D, BatchNormalization, MaxPooling2D, Lambda, \
+    Add
 from keras.models import Model
+from dtcwt.numpy import Transform2d
+import numpy as np
+
+
+def forward(X):
+    return
+
+
+def dtcwt_layer(input_shape):
+    transform = Transform2d()
+    f = lambda X: transform.forward(X, 2).lowpass
+    if len(input_shape) == 3:
+        f = lambda X: np.array([X[:, :, i] for i in range(input_shape[-1])])
+        f = lambda X: f(X).reshape((1, input_shape[0] // 2, input_shape[1] // 2, input_shape[2]))
+    else:
+        f = lambda X: f(X).reshape((1, input_shape[0] // 2, input_shape[1] // 2))
+    return Lambda(f)
 
 
 def cnn2d_model(input_shape, num_classes):
     x = Input(input_shape)
-    x = Conv2D(32, 3, 3, border_mode='same', input_shape=input_shape)(x)
+    y = dtcwt_layer(input_shape)(x)
+
+    x = Conv2D(16, 3, 3, border_mode='same', input_shape=input_shape)(x)
     x = BatchNormalization()(x)
     x = Activation('relu')(x)
-    x = Conv2D(32, 3, 3)(x)
+    x = Conv2D(16, 3, 3)(x)
     x = BatchNormalization()(x)
     x = Activation('relu')(x)
     x = MaxPooling2D(pool_size=(2, 2))(x)
+
+    x = Add()([x, y])
 
     x = Conv2D(64, 3, 3, border_mode='same')(x)
     x = BatchNormalization()(x)
