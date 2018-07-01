@@ -11,8 +11,10 @@ try:
                         epochs=EPOCHS,
                         callbacks=logger(RESULT_PATH),
                         verbose=True)
-    y_pred = model.predict(X_test)
+    if not os.path.isdir(RESULT_PATH):
+        os.mkdir(RESULT_PATH)
     plot_history(history.history, RESULT_PATH)
+    y_pred = model.predict(X_test)
     save_metrics(y_test, y_pred, RESULT_PATH)
 finally:
     save_model()
