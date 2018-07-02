@@ -22,21 +22,10 @@ try:
         image_id = 0
         for video_path in video_paths:
             video = Video(video_path)
-            if BACKGROUND_SUBTRACTION:
-                background_subtractor = cv2.createBackgroundSubtractorMOG2()
             progressbar = generic_utils.Progbar(len(video))
             frame_id = 0
             for frame in video:
                 progressbar.add(1)
-                if BACKGROUND_SUBTRACTION:
-                    mask = background_subtractor.apply(frame)
-                    mask = imerode(mask, size=3)
-                    mask = imclose(mask, size=10)
-                    mask3d = np.zeros_like(frame)
-                    mask3d[:, :, 0] = mask
-                    mask3d[:, :, 1] = mask
-                    mask3d[:, :, 2] = mask
-                    frame[mask3d < 100] = 0
                 if CHANCE > random():
                     image_path = os.path.join(destination_directory, str(image_id) + '.jpg')
                     imwrite(image_path, frame)
