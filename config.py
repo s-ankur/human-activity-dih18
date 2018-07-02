@@ -10,7 +10,6 @@ SIZE3D = (200, 200)
 MODE = 'color'
 BATCH_SIZE = 50
 EPOCHS = 20
-BACKGROUND_SUBTRACTION = False
 TEST_TRAIN_SPLIT = .33
 
 ############### CONFIG ##############
