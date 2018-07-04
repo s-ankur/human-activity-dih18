@@ -21,11 +21,6 @@ transform2d = dtcwt.Transform2d()
 # :step], vys[::step,::step],color='g', angles='xy', scale_units='xy', scale=0.25)
 
 
-a = cv2.resize(imread(sys.argv[1]), (512, 512))
-b = cv2.resize(imread(sys.argv[2]), (512, 512))
-a = im2gray(a)
-b = im2gray(b)
-
 
 def transform_dtcwt(ref, src):
     ref_t = transform2d.forward(ref, nlevels=4)
@@ -36,15 +31,12 @@ def transform_dtcwt(ref, src):
     return mesh
 
 
-c = transform_dtcwt(a, b)
-c *= (255 / c.max())
-c = c.astype('int')
+def dtcwt3d_layer(input_shape):
 
-c[c < c.max() * .2] = 0
-d = plt.imshow(c, cmap='hot')
-
-plt.colorbar(d)
-plt.figure()
-k = np.dstack([a, b, c])
-plt.imshow(k.astype('int'))
-plt.show()
+    f = lambda X: transform2d.forward(X, 2).lowpass
+    if len(input_shape) == 3:
+        f = lambda X: np.array([X[:, :, i] for i in range(input_shape[-1])])
+        f = lambda X: f(X).reshape((1, input_shape[0] // 2, input_shape[1] // 2, input_shape[2]))
+    else:
+        f = lambda X: f(X).reshape((1, input_shape[0] // 2, input_shape[1] // 2))
+    return Lambda(f)

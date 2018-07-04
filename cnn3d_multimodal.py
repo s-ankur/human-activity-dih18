@@ -3,16 +3,7 @@ from keras.models import Model
 from dtcwt.numpy import Transform2d
 import numpy as np
 
-
-def dtcwt3d_layer(input_shape):
-    transform = Transform2d()
-    f = lambda X: transform.forward(X, 2).lowpass
-    if len(input_shape) == 3:
-        f = lambda X: np.array([X[:, :, i] for i in range(input_shape[-1])])
-        f = lambda X: f(X).reshape((1, input_shape[0] // 2, input_shape[1] // 2, input_shape[2]))
-    else:
-        f = lambda X: f(X).reshape((1, input_shape[0] // 2, input_shape[1] // 2))
-    return Lambda(f)
+from transform import dtcwt3d_layer
 
 
 def cnn3d_model(input_shape, num_classes):
