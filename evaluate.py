@@ -7,25 +7,27 @@ import sklearn.metrics
 
 
 def plot_history(history, result_path):
-    plt.plot(history['acc'], marker='.')
-    plt.plot(history['val_acc'], marker='.')
-    plt.title('Model accuracy')
-    plt.xlabel('epoch')
-    plt.ylabel('accuracy')
-    plt.grid()
-    plt.legend(['acc', 'val_acc'], loc='lower right')
-    plt.savefig(os.path.join(result_path, 'metrics.png'))
-    plt.close()
+    if history.get('acc') and history.get('val_acc'):
+        plt.plot(history['acc'], marker='.')
+        plt.plot(history['val_acc'], marker='.')
+        plt.title('Model accuracy')
+        plt.xlabel('epoch')
+        plt.ylabel('accuracy')
+        plt.grid()
+        plt.legend(loc='lower right')
+        plt.savefig(os.path.join(result_path, 'metrics.png'))
+        plt.close()
 
-    plt.plot(history['loss'], marker='.')
-    plt.plot(history['val_loss'], marker='.')
-    plt.title('Model loss')
-    plt.xlabel('epoch')
-    plt.ylabel('loss')
-    plt.grid()
-    plt.legend(['loss', 'val_loss'], loc='lower right')
-    plt.savefig(os.path.join(result_path, 'metrics.png'))
-    plt.close()
+    if history.get('loss') and history.get('val_loss'):
+        plt.plot(history['loss'], marker='.')
+        plt.plot(history['val_loss'], marker='.')
+        plt.title('Model loss')
+        plt.xlabel('epoch')
+        plt.ylabel('loss')
+        plt.grid()
+        plt.legend(loc='lower right')
+        plt.savefig(os.path.join(result_path, 'metrics.png'))
+        plt.close()
 
 
 def save_metrics(y_test, y_pred, time_trained, result_path):

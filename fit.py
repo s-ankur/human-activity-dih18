@@ -1,8 +1,8 @@
+from time import time
+from sklearn.model_selection import train_test_split
 from model import *
 from dataset import load_data
-from sklearn.model_selection import train_test_split
 from evaluate import *
-from time import time
 
 try:
     X, y = load_data(categories)
