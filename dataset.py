@@ -11,7 +11,7 @@ def load_data(categories):
     labels = []
     for label, category in enumerate(categories):
         files = glob.glob(os.path.join(category, '*'))
-        print("Category %s --- \t\t %d files" % (category, len(files)))
+        print("Category %-50s  %6d files" % (category, len(files)))
         for file in files:
             image = imread(file)
             image = cv2.resize(image, SIZE)
