@@ -6,7 +6,7 @@ import itertools
 import sklearn.metrics
 
 
-def plot_history(history,result_path):
+def plot_history(history, result_path):
     plt.plot(history['acc'], marker='.')
     plt.plot(history['val_acc'], marker='.')
     plt.title('Model accuracy')

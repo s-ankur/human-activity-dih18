@@ -17,5 +17,5 @@ losses = [
     (LPNorm(model.input), 10),
     (TotalVariation(model.input), 10)
 ]
-#opt = Optimizer(model.input, losses)
-#opt.minimize(max_iter=500, verbose=True, callbacks=[GifGenerator('opt_progress')])
+# opt = Optimizer(model.input, losses)
+# opt.minimize(max_iter=500, verbose=True, callbacks=[GifGenerator('opt_progress')])

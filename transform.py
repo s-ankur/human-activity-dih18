@@ -8,6 +8,7 @@ import sys
 
 transform2d = dtcwt.Transform2d()
 
+
 # warped_src = registration.warp(src, reg, method='bilinear')
 # vxs, vys = registration.velocityfield(reg, ref.shape[:2], method='bilinear')
 # vxs = vxs*ref.shape[1]
@@ -21,7 +22,6 @@ transform2d = dtcwt.Transform2d()
 # :step], vys[::step,::step],color='g', angles='xy', scale_units='xy', scale=0.25)
 
 
-
 def transform_dtcwt(ref, src):
     ref_t = transform2d.forward(ref, nlevels=4)
     src_t = transform2d.forward(src, nlevels=4)
@@ -32,7 +32,6 @@ def transform_dtcwt(ref, src):
 
 
 def dtcwt3d_layer(input_shape):
-
     f = lambda X: transform2d.forward(X, 2).lowpass
     if len(input_shape) == 3:
         f = lambda X: np.array([X[:, :, i] for i in range(input_shape[-1])])

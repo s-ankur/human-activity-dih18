@@ -14,5 +14,4 @@ CHANNELS = 3
 BATCH_SIZE = 128
 EPOCHS = 30
 
-
 ############### CONFIG ##############
