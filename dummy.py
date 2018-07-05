@@ -14,5 +14,8 @@ class DummyClassifierAdaptor:
 
         return History()
 
+    def __getattr__(self, item):
+        return getattr(self.classifier, item)
+
 
 cnn2d_model = cnn3d_model = DummyClassifierAdaptor

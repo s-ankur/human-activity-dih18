@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import itertools
 import sklearn.metrics
+import json
 
 
 def plot_history(history, result_path):
@@ -30,15 +31,19 @@ def plot_history(history, result_path):
         plt.close()
 
 
-def save_metrics(y_test, y_pred, time_trained, result_path):
+def save_metrics(y_test, y_pred, time_trained, categories, result_path):
     y_test = np.argmax(y_test, axis=1)
     y_pred = np.argmax(y_pred, axis=1)
+    accuracy = sklearn.metrics.accuracy_score(y_test, y_pred)
 
-    with open('metrics.txt', 'w') as file:
-        file.write(str(time_trained))
+    with open('metrics.txt', 'w') as metrics_file:
+        metrics = dict(time_trained=time_trained,
+                       accuracy=accuracy)
+        json.dump(metrics, metrics_file, sort_keys=True)
 
-    with open('classification_report.txt', 'w') as file:
-        file.write(sklearn.metrics.classification_report(y_test, y_pred, digits=5))
+    with open('classification_report.txt', 'w') as classification_report_file:
+        classification_report = sklearn.metrics.classification_report(y_test, y_pred, target_names=categories, digits=5)
+        classification_report_file.write(classification_report)
 
     confusion_matrix = sklearn.metrics.confusion_matrix(y_test, y_pred)
     confusion_matrix = confusion_matrix.astype('float') / confusion_matrix.sum(axis=1)[:, np.newaxis]
