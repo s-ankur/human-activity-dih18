@@ -5,8 +5,8 @@ from utility.cv_utils import *
 
 
 def load_data(categories):
-    if len(categories) == 1:
-        raise ValueError("Cannot classify single class")
+    if len(categories) in (0, 1):
+        raise ValueError("Cannot classify %d class" % len(categories))
     data = []
     labels = []
     for label, category in enumerate(categories):
