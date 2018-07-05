@@ -14,7 +14,9 @@ def load_model():
 
 
 def save_model():
-    model.save_weights(os.path.join(RESULT_PATH, MODEL_NAME))
+    with open(os.path.join(RESULT_PATH, MODEL_NAME) + '.json', 'w')as model_file:
+        model_file.write(model.to_json())
+    model.save_weights(os.path.join(RESULT_PATH, MODEL_NAME) + '.h5')
     print('Saved model successfully')
 
 

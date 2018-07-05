@@ -36,7 +36,7 @@ def save_metrics(y_test, y_pred, time_trained, categories, result_path):
     y_pred = np.argmax(y_pred, axis=1)
     accuracy = sklearn.metrics.accuracy_score(y_test, y_pred)
 
-    with open('metrics.txt', 'w') as metrics_file:
+    with open('metrics.json', 'w') as metrics_file:
         metrics = dict(time_trained=time_trained,
                        accuracy=accuracy)
         json.dump(metrics, metrics_file, sort_keys=True)

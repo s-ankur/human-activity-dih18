@@ -3,7 +3,7 @@
 VIDEO_PATH = 'videos'
 IMAGE_PATH = 'images'
 RESULT_PATH = 'results'
-MODEL_NAME = 'saved.h5'
+MODEL_NAME = 'saved'
 MODEL = 'cnn2d'
 
 CHANCE = .1

@@ -3,7 +3,7 @@
 VIDEO_PATH = 'videos'
 CLIP_PATH = 'clips'
 RESULT_PATH = 'results3d'
-MODEL_NAME = 'saved3d.h5'
+MODEL_NAME = 'saved3d'
 MODEL = 'cnn3d'
 
 CHANCE = .01
