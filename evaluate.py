@@ -1,17 +1,15 @@
-import itertools
-import os
 import json
-
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 import sklearn.metrics
 from keras.callbacks import CSVLogger, TensorBoard
 
 
 def plot_history(history, result_path):
     if history.get('acc') and history.get('val_acc'):
-        plt.plot(history['acc'], marker='.')
-        plt.plot(history['val_acc'], marker='.')
+        plt.plot(history['acc'], marker='.', label='train_accuracy')
+        plt.plot(history['val_acc'], marker='.', label='validation_accuracy')
         plt.title('Model accuracy')
         plt.xlabel('epoch')
         plt.ylabel('accuracy')
@@ -21,8 +19,8 @@ def plot_history(history, result_path):
         plt.close()
 
     if history.get('loss') and history.get('val_loss'):
-        plt.plot(history['loss'], marker='.')
-        plt.plot(history['val_loss'], marker='.')
+        plt.plot(history['loss'], marker='.', label='train_loss')
+        plt.plot(history['val_loss'], marker='.', label='validation_loss')
         plt.title('Model loss')
         plt.xlabel('epoch')
         plt.ylabel('loss')
@@ -52,14 +50,6 @@ def save_metrics(y_test, y_pred, time_trained, categories, result_path):
 
     plt.imshow(confusion_matrix, interpolation='nearest', cmap='hot')
     plt.colorbar()
-
-    for i, j in itertools.product(range(confusion_matrix.shape[0]), range(confusion_matrix.shape[1])):
-        plt.text(j, i,
-                 '%.2f' % confusion_matrix[i, j],
-                 horizontalalignment="center",
-                 color="white" if confusion_matrix[i, j] > .5 else "black")
-
-    plt.tight_layout()
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
     plt.savefig(os.path.join(result_path, 'confusion_matrix.png'))
