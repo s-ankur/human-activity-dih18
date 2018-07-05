@@ -7,7 +7,6 @@ from utility.cv_utils import *
 
 try:
     category_names = os.listdir(VIDEO_PATH)
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
     print("Processing %d categories" % len(category_names))
     if os.path.isdir(IMAGE_PATH):
         shutil.rmtree(IMAGE_PATH, ignore_errors=True)

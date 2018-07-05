@@ -15,6 +15,8 @@ def load_data(categories):
             video = Video(file)
             frame_array = []
             for frame in video:
+                if CHANNELS == 1:
+                    frame = im2gray(frame)
                 frame_array.append(frame)
             frame_array = np.array(frame_array)
             data.append(frame_array)

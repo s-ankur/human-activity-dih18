@@ -12,8 +12,10 @@ def load_data(categories):
         files = glob.glob(os.path.join(category, '*'))
         print("Category %s --- %d files" % (category, len(files)))
         for file in files:
-            image = imread(file, MODE)
+            image = imread(file)
             image = cv2.resize(image, SIZE)
+            if CHANNELS == 1:
+                image = im2gray(image)
             data.append(image)
             labels.append(label)
     X = np.array(data)
