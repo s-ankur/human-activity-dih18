@@ -17,5 +17,8 @@ class DummyClassifierAdaptor:
     def __getattr__(self, item):
         return getattr(self.classifier, item, lambda *_, **__: True)
 
+    def to_json(self):
+        return 'Dummy'
+
 
 cnn2d_model = cnn3d_model = DummyClassifierAdaptor
