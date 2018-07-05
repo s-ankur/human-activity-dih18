@@ -18,6 +18,6 @@ try:
     time_trained = time() - start_time
     plot_history(history.history, RESULT_PATH)
     y_pred = model.predict(X_test)
-    save_metrics(y_test, y_pred, time_trained, RESULT_PATH)
+    save_metrics(y_test, y_pred, time_trained, categories, RESULT_PATH)
 finally:
     save_model()

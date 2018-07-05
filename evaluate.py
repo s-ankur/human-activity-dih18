@@ -17,7 +17,7 @@ def plot_history(history, result_path):
         plt.ylabel('accuracy')
         plt.grid()
         plt.legend(loc='lower right')
-        plt.savefig(os.path.join(result_path, 'metrics.png'))
+        plt.savefig(os.path.join(result_path, 'accuracy.png'))
         plt.close()
 
     if history.get('loss') and history.get('val_loss'):
@@ -28,7 +28,7 @@ def plot_history(history, result_path):
         plt.ylabel('loss')
         plt.grid()
         plt.legend(loc='lower right')
-        plt.savefig(os.path.join(result_path, 'metrics.png'))
+        plt.savefig(os.path.join(result_path, 'loss.png'))
         plt.close()
 
 
