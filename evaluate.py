@@ -6,24 +6,33 @@ import itertools
 import sklearn.metrics
 
 
-def plot_history(history, result_path):
-    for metric in history:
-        plt.plot(history[metric], marker='.', label=metric)
-        plt.title('Model Metrics')
-        plt.xlabel('epoch')
-        plt.ylabel('accuracy')
+def plot_history(history,result_path):
+    plt.plot(history['acc'], marker='.')
+    plt.plot(history['val_acc'], marker='.')
+    plt.title('Model accuracy')
+    plt.xlabel('epoch')
+    plt.ylabel('accuracy')
     plt.grid()
-    plt.legend(['acc', 'val_acc'], loc='center right')
+    plt.legend(['acc', 'val_acc'], loc='lower right')
+    plt.savefig(os.path.join(result_path, 'metrics.png'))
+    plt.close()
+
+    plt.plot(history['loss'], marker='.')
+    plt.plot(history['val_loss'], marker='.')
+    plt.title('Model loss')
+    plt.xlabel('epoch')
+    plt.ylabel('loss')
+    plt.grid()
+    plt.legend(['loss', 'val_loss'], loc='lower right')
     plt.savefig(os.path.join(result_path, 'metrics.png'))
     plt.close()
 
 
-def save_metrics(y_test, y_pred,time_trained, result_path):
-
+def save_metrics(y_test, y_pred, time_trained, result_path):
     y_test = np.argmax(y_test, axis=1)
     y_pred = np.argmax(y_pred, axis=1)
 
-    with open('metrics.txt') as file:
+    with open('metrics.txt', 'w') as file:
         file.write(str(time_trained))
 
     with open('classification_report.txt', 'w') as file:
