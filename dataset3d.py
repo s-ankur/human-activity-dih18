@@ -11,7 +11,7 @@ def load_data(categories):
     labels = []
     for label, category in enumerate(categories):
         files = glob.glob(os.path.join(category, '*'))
-        print("Category %s --- %d files" % (category, len(files)))
+        print("Category %s --- \t\t%d files" % (category, len(files)))
         for file in files:
             video = Video(file)
             frame_array = []
