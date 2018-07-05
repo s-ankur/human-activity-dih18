@@ -1,13 +1,13 @@
 from sklearn.dummy import DummyClassifier
 
 
-class DummyClassifierAdaptor(DummyClassifier):
+class DummyClassifierAdaptor:
 
     def __init__(self, *_):
-        super().__init__(strategy='most_frequent')
+        self.classifier = DummyClassifier(strategy='most_frequent')
 
     def fit(self, X, y, *_):
-        super().fit(X, y)
+        self.classifier.fit(X, y)
 
         class History:
             history = {}
