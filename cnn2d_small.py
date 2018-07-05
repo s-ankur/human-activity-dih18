@@ -1,5 +1,5 @@
-from keras.layers import Input, Dense, Flatten
 from keras.layers import Activation, Conv2D, BatchNormalization
+from keras.layers import Input, Dense, Flatten
 from keras.models import Model
 from keras.regularizers import l2
 

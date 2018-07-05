@@ -1,5 +1,4 @@
 import logging
-import numpy as np
 from dtcwt.numpy import Transform2d
 from dtcwt.registration import *
 from matplotlib.pyplot import *

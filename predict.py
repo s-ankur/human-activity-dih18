@@ -1,7 +1,7 @@
+import sys
+
 from model import *
 from utility.cv_utils import *
-import sys
-import numpy as np
 
 if len(sys.argv) == 2:
     video_path = sys.argv[1]

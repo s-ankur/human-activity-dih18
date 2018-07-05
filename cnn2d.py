@@ -1,5 +1,5 @@
+from keras.layers import Activation, Conv2D, BatchNormalization, MaxPooling2D
 from keras.layers import Dense, Dropout, Flatten
-from keras.layers import Activation, Conv2D, GlobalAveragePooling2D, BatchNormalization, SeparableConv2D, MaxPooling2D
 from keras.models import Sequential
 
 

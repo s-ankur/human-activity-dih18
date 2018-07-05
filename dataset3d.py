@@ -1,6 +1,7 @@
 from keras.utils import np_utils
-from utility.cv_utils import *
+
 from config3d import *
+from utility.cv_utils import *
 
 
 def load_data(categories):

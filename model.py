@@ -1,6 +1,7 @@
-from config import *
 import glob
 import os
+
+from config import *
 
 categories = glob.glob(os.path.join(IMAGE_PATH, '*'))
 cnn2d_model = __import__(MODEL).cnn2d_model
@@ -9,6 +10,8 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 
 
 def load_model():
+    if not os.path.isdir(RESULT_PATH):
+        os.mkdir(RESULT_PATH)
     model.load_weights(os.path.join(RESULT_PATH, MODEL_NAME))
     print('Loaded model successfully')
 

@@ -1,8 +1,8 @@
+import numpy as np
+from dtcwt.numpy import Transform2d
 from keras.layers import Dense, Dropout, Flatten, Input, Activation, Conv2D, BatchNormalization, MaxPooling2D, Lambda, \
     Add
 from keras.models import Model
-from dtcwt.numpy import Transform2d
-import numpy as np
 
 
 def dtcwt_layer(input_shape):

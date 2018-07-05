@@ -1,10 +1,7 @@
 import dtcwt
 import dtcwt.registration as registration
-import numpy as np
-from utility.cv_utils import *
 
-import matplotlib.pyplot as plt
-import sys
+from utility.cv_utils import *
 
 transform2d = dtcwt.Transform2d()
 

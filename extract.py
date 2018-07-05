@@ -1,7 +1,9 @@
 import sys
 import shutil
-from keras.utils import generic_utils
 from random import random
+
+from keras.utils import generic_utils
+
 from config import *
 from utility.cv_utils import *
 

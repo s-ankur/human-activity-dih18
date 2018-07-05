@@ -10,7 +10,7 @@ CHANCE = .1
 TEST_TRAIN_SPLIT = .33
 SIZE = (64, 64)
 CHANNELS = 3
-BATCH_SIZE = 50
+BATCH_SIZE = 128
 EPOCHS = 20
 
 ############### CONFIG ##############

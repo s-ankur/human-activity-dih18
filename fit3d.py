@@ -1,8 +1,10 @@
 from time import time
+
 from sklearn.model_selection import train_test_split
-from model3d import *
+
 from dataset3d import load_data
 from evaluate import *
+from model3d import *
 
 try:
     X, y = load_data(categories)
@@ -14,8 +16,6 @@ try:
                         callbacks=logger(RESULT_PATH),
                         verbose=True)
     time_trained = time() - start_time
-    if not os.path.isdir(RESULT_PATH):
-        os.mkdir(RESULT_PATH)
     plot_history(history.history, RESULT_PATH)
     y_pred = model.predict(X_test)
     save_metrics(y_test, y_pred, time_trained, RESULT_PATH)

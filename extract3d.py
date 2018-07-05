@@ -1,7 +1,7 @@
-from utility.cv_utils import *
-from config3d import *
-import os
 import random
+
+from config3d import *
+from utility.cv_utils import *
 
 fourcc = cv2.VideoWriter_fourcc(*"MPEG")
 category_names = os.listdir(VIDEO_PATH)

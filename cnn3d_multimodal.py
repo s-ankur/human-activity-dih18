@@ -1,7 +1,5 @@
-from keras.layers import Activation, Conv3D, Dense, Dropout, Flatten, MaxPooling3D, Lambda, Add, Input
+from keras.layers import Activation, Conv3D, Dense, Dropout, Flatten, MaxPooling3D, Add, Input
 from keras.models import Model
-from dtcwt.numpy import Transform2d
-import numpy as np
 
 from transform import dtcwt3d_layer
 

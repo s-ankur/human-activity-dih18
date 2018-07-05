@@ -1,10 +1,11 @@
-from keras.callbacks import CSVLogger, TensorBoard
-import os
-import numpy as np
-import matplotlib.pyplot as plt
 import itertools
-import sklearn.metrics
+import os
 import json
+
+import matplotlib.pyplot as plt
+import numpy as np
+import sklearn.metrics
+from keras.callbacks import CSVLogger, TensorBoard
 
 
 def plot_history(history, result_path):
@@ -36,12 +37,12 @@ def save_metrics(y_test, y_pred, time_trained, categories, result_path):
     y_pred = np.argmax(y_pred, axis=1)
     accuracy = sklearn.metrics.accuracy_score(y_test, y_pred)
 
-    with open('metrics.json', 'w') as metrics_file:
+    with open(os.path.join(result_path, 'metrics.json'), 'w') as metrics_file:
         metrics = dict(time_trained=time_trained,
                        accuracy=accuracy)
         json.dump(metrics, metrics_file, sort_keys=True)
 
-    with open('classification_report.txt', 'w') as classification_report_file:
+    with open(os.path.join(result_path, 'classification_report.txt'), 'w') as classification_report_file:
         classification_report = sklearn.metrics.classification_report(y_test, y_pred, target_names=categories, digits=5)
         classification_report_file.write(classification_report)
 

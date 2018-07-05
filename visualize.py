@@ -1,8 +1,6 @@
 from vis.losses import ActivationMaximization
 from vis.regularizers import TotalVariation, LPNorm
-from vis.optimizer import Optimizer
 
-from vis.callbacks import GifGenerator
 from model3d import model
 
 # The name of the layer we want to visualize
