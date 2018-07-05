@@ -4,6 +4,7 @@ VIDEO_PATH = 'videos'
 CLIP_PATH = 'clips'
 RESULT_PATH = 'results3d'
 MODEL_NAME = 'saved3d.h5'
+MODEL = 'cnn3d'
 CHANCE = .01
 DEPTH = 3
 SIZE3D = (64, 64)
