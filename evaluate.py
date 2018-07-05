@@ -18,11 +18,15 @@ def plot_history(history, result_path):
     plt.close()
 
 
-def save_metrics(y_test, y_pred, result_path):
+def save_metrics(y_test, y_pred,time_trained, result_path):
+
     y_test = np.argmax(y_test, axis=1)
     y_pred = np.argmax(y_pred, axis=1)
 
-    with open('classification_report', 'w') as file:
+    with open('metrics.txt') as file:
+        file.write(str(time_trained))
+
+    with open('classification_report.txt', 'w') as file:
         file.write(sklearn.metrics.classification_report(y_test, y_pred, digits=5))
 
     confusion_matrix = sklearn.metrics.confusion_matrix(y_test, y_pred)
