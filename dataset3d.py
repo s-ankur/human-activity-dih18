@@ -11,13 +11,13 @@ def load_data(categories):
     labels = []
     for label, category in enumerate(categories):
         files = glob.glob(os.path.join(category, '*'))
-        print("Category %-50s  %-7d files" % (category, len(files)))
+        print("%-3d. Category %-50s  %-7d files" % (label, category, len(files)))
         for file in files:
             video = Video(file)
             frame_array = []
             for frame in video:
                 if CHANNELS == 1:
-                    frame = im2gray(frame)
+                    frame = im2gray(frame).reshape(frame.shape[:-1], 1)
                 frame_array.append(frame)
             frame_array = np.array(frame_array)
             data.append(frame_array)
