@@ -20,7 +20,7 @@ def cnn2d_model(input_shape, num_classes):
     inp = Input(input_shape)
     y = dtcwt_layer(input_shape)(inp)
 
-    x = Conv2D(16, 3, 3, border_mode='same', input_shape=input_shape)(x)
+    x = Conv2D(16, 3, 3, padding='same', input_shape=input_shape)(x)
     x = BatchNormalization()(x)
     x = Activation('relu')(x)
     x = Conv2D(16, 3, 3)(x)
@@ -30,7 +30,7 @@ def cnn2d_model(input_shape, num_classes):
 
     x = Add()([x, y])
 
-    x = Conv2D(64, 3, 3, border_mode='same')(x)
+    x = Conv2D(64, 3, 3, padding='same')(x)
     x = BatchNormalization()(x)
     x = Activation('relu')(x)
     x = Conv2D(64, 3, 3)(x)

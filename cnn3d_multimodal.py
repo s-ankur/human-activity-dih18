@@ -9,15 +9,15 @@ def cnn3d_model(input_shape, num_classes):
 
     y = dtcwt3d_layer(input_shape)(inp)
 
-    x = Conv3D(32, kernel_size=(3, 3, 3), input_shape=input_shape, border_mode='same')(inp)
+    x = Conv3D(32, kernel_size=(3, 3, 3), input_shape=input_shape, padding='same')(inp)
     x = Activation('relu')(x)
-    x = MaxPooling3D(pool_size=(3, 3, 3), border_mode='same')(x)
+    x = MaxPooling3D(pool_size=(3, 3, 3), padding='same')(x)
 
     x = Add()([x, y])
 
-    x = Conv3D(64, kernel_size=(3, 3, 3), border_mode='same')(x)
+    x = Conv3D(64, kernel_size=(3, 3, 3), padding='same')(x)
     x = Activation('relu')(x)
-    x = MaxPooling3D(pool_size=(3, 3, 3), border_mode='same')(x)
+    x = MaxPooling3D(pool_size=(3, 3, 3), padding='same')(x)
 
     x = Flatten()(x)
     x = Dense(512, activation='sigmoid')(x)

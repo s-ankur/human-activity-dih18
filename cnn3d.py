@@ -4,17 +4,17 @@ from keras.models import Sequential
 
 def cnn3d_model(input_shape, num_classes):
     model = Sequential()
-    model.add(Conv3D(32, kernel_size=(3, 3, 3), input_shape=input_shape, border_mode='same'))
+    model.add(Conv3D(32, kernel_size=(3, 3, 3), input_shape=input_shape, padding='same'))
     model.add(Activation('relu'))
-    model.add(Conv3D(32, kernel_size=(3, 3, 3), border_mode='same'))
+    model.add(Conv3D(32, kernel_size=(3, 3, 3), padding='same'))
     model.add(Activation('sigmoid'))
-    model.add(MaxPooling3D(pool_size=(3, 3, 3), border_mode='same'))
+    model.add(MaxPooling3D(pool_size=(3, 3, 3), padding='same'))
 
-    model.add(Conv3D(64, kernel_size=(3, 3, 3), border_mode='same'))
+    model.add(Conv3D(64, kernel_size=(3, 3, 3), padding='same'))
     model.add(Activation('relu'))
-    model.add(Conv3D(64, kernel_size=(3, 3, 3), border_mode='same'))
+    model.add(Conv3D(64, kernel_size=(3, 3, 3), padding='same'))
     model.add(Activation('sigmoid'))
-    model.add(MaxPooling3D(pool_size=(3, 3, 3), border_mode='same'))
+    model.add(MaxPooling3D(pool_size=(3, 3, 3), padding='same'))
 
     model.add(Flatten())
     model.add(Dense(256, activation='sigmoid'))
