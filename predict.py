@@ -10,6 +10,8 @@ else:
 video = Video(video_path)
 
 for frame in video:
+    if CHANNELS == 1:
+        frame = im2gray(frame).reshape(*frame.shape[:-1], 1)
     cv2.imshow('window', frame)
     cv2.waitKey(1)
     frame = cv2.resize(frame, SIZE)
