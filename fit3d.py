@@ -6,6 +6,8 @@ from dataset3d import load_data
 from evaluate import *
 from model3d import *
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 try:
     X, y = load_data(categories)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_TRAIN_SPLIT, random_state=42)
