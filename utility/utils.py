@@ -24,21 +24,15 @@ def angle(v1, v2=(1, 0)):
         return 0
 
 
-def try_to(f, args=None, kwargs=None, max_try='inf', exceptions=(KeyError, ValueError), raises=True):
-    if max_try == 'inf':
-        max_try = -1
+def try_to(f, args=None, kwargs=None, max_try=-1, exceptions=(KeyError, ValueError), silent=True):
     if args is None:
         args = []
     if kwargs is None:
         kwargs = {}
-    while True:
+    exceptions = tuple(exceptions)
+    while max_try:
         try:
             return f(*args, **kwargs)
-        except Exception as e:
-            if max_try != 0 and any(map(lambda x: isinstance(e, x), exceptions)):
-                max_try -= 1
-                print(isinstance(e, exceptions[0]))
-            else:
-                if not raises:
-                    print(e)
-                raise
+        except exceptions as e:
+            if not silent:
+                print(repr(e))
