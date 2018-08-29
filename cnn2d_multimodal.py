@@ -16,7 +16,7 @@ def dtcwt_layer(input_shape):
     return Lambda(f)
 
 
-def cnn2d_model(input_shape, num_classes):
+def cnn2d_multimodal_model(input_shape, num_classes):
     inp = Input(input_shape)
     y = dtcwt_layer(input_shape)(inp)
 

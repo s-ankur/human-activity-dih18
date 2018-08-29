@@ -4,8 +4,8 @@ import os
 from config import *
 
 categories = glob.glob(os.path.join(IMAGE_PATH, '*'))
-cnn2d_model = __import__(MODEL).cnn2d_model
-model = cnn2d_model(input_shape=SIZE + (CHANNELS,), num_classes=len(categories))
+MyModel = __import__(MODEL).__get__(MODEL+'_model')
+model = MyModel(input_shape=SIZE + (CHANNELS,), num_classes=len(categories))
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 
