@@ -12,7 +12,7 @@ from collections import deque
 import sys
 
 
-def lstm_model(input_shape,nb_classes):
+def lstm_model(input_shape,num_classes):
         """Build a simple LSTM network. We pass the extracted features from
         our CNN to this model predomenently."""
         # Model.
@@ -22,7 +22,7 @@ def lstm_model(input_shape,nb_classes):
                        dropout=0.5))
         model.add(Dense(512, activation='relu'))
         model.add(Dropout(0.5))
-        model.add(Dense(nb_classes, activation='softmax'))
+        model.add(Dense(num_classes, activation='softmax'))
 
         return model
 

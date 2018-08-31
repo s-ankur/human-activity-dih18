@@ -4,7 +4,9 @@ import os
 from config import *
 
 categories = glob.glob(os.path.join(IMAGE_PATH, '*'))
-MyModel = __import__(MODEL).__get__(MODEL+'_model')
+print("Categories Found ",len(categories))
+
+MyModel = getattr(__import__(MODEL),(MODEL+'_model'))
 model = MyModel(input_shape=SIZE + (CHANNELS,), num_classes=len(categories))
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 

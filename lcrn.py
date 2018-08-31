@@ -12,7 +12,7 @@ from collections import deque
 import sys
 
 
-def lrcn_model(input_shape,nb_classes):
+def lcrn_model(input_shape,nb_classes):
     """Build a CNN into RNN.
     Starting version from:
         https://github.com/udacity/self-driving-car/blob/master/

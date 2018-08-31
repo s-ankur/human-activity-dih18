@@ -3,6 +3,9 @@ from keras.utils import np_utils
 from config import *
 from utility.cv_utils import *
 
+from extractor import Extractor
+
+
 
 def load_data(categories):
     if len(categories) in (0, 1):
@@ -22,6 +25,12 @@ def load_data(categories):
     X = np.array(data)
     y = np.array(labels)
     y = np_utils.to_categorical(y, len(categories))
+
+    if EXTRACT:
+        extractor=Extractor()
+        X=extractor.extract(X)
+        X=X.reshape(*X.shape,1)
+    
     print('X.shape:', X.shape)
     print('y.shape:', y.shape)
     return X, y
