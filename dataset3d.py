@@ -22,10 +22,23 @@ def load_data(categories):
             frame_array = np.array(frame_array)
             data.append(frame_array)
             labels.append(label)
-    X = np.array(data).transpose((0, 2, 3, 4, 1))
-    X = X.reshape((X.shape[0], *SIZE3D, DEPTH, CHANNELS))
+    if not EXTRACT:
+    	X = np.array(data).transpose((0, 2, 3, 4, 1))
+    	X = X.reshape((X.shape[0], *SIZE3D, DEPTH, CHANNELS))
+    else:
+        extractor=Extractor()	
+	X=[]
+        for frame_array in data:
+     	    frame_array=extractor.extract(frame_array)
+            X.append(frame_array)
+        X=np.array(X)
+
     y = np.array(labels)
     y = np_utils.to_categorical(y, len(categories))
+
+    if EXTRACT:
+        
+        
     print('X.shape:', X.shape)
     print('y.shape:', y.shape)
     return X, y

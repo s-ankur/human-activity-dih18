@@ -4,8 +4,10 @@ import os
 from config3d import *
 
 categories = glob.glob(os.path.join(CLIP_PATH, '*'))
-cnn3d_model = __import__(MODEL).cnn3d_model
-model = cnn3d_model(input_shape=SIZE3D + (DEPTH, CHANNELS), num_classes=len(categories))
+print("Categories Found ",len(categories))
+
+MyModel = getattr(__import__(MODEL),(MODEL+'_model'))
+model = MyModel(input_shape=SIZE3D + (DEPTH, CHANNELS), num_classes=len(categories))
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 
