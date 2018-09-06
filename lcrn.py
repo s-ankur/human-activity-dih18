@@ -12,7 +12,7 @@ from collections import deque
 import sys
 
 
-def lcrn_model(input_shape,nb_classes):
+def lcrn_model(input_shape,num_classes):
     """Build a CNN into RNN.
     Starting version from:
         https://github.com/udacity/self-driving-car/blob/master/
@@ -27,7 +27,7 @@ def lcrn_model(input_shape,nb_classes):
     model = Sequential()
 
     model.add(TimeDistributed(Conv2D(32, (7, 7), strides=(2, 2),
-        activation='relu', padding='same'), input_shape=input_shape))
+        activation='relu', padding='same'), input_shape=(80,80,3)))
     model.add(TimeDistributed(Conv2D(32, (3,3),
         kernel_initializer="he_normal", activation='relu')))
     model.add(TimeDistributed(MaxPooling2D((2, 2), strides=(2, 2))))
@@ -60,7 +60,7 @@ def lcrn_model(input_shape,nb_classes):
 
     model.add(Dropout(0.5))
     model.add(LSTM(256, return_sequences=False, dropout=0.5))
-    model.add(Dense(nb_classes, activation='softmax'))
+    model.add(Dense(num_classes, activation='softmax'))
 
     return model
 
