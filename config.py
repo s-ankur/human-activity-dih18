@@ -5,7 +5,7 @@ MODEL_NAME = 'saved'
 
 
 ############### CONFIG_CNN ##############
-MODEL = 'cnn2d'
+MODEL = 'dummy'
 EXTRACT=False
 CHANCE = .1
 TEST_TRAIN_SPLIT = .33
