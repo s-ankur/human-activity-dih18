@@ -40,7 +40,7 @@ class DummyClassifierCNNAdaptor:
         return getattr(self.classifier, item, lambda *_, **__: True)
 
     def to_json(self):
-        return self.classifier.get_params()
+        return str(self.classifier.get_params())
 
 
 
