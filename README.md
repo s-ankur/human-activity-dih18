@@ -1,14 +1,16 @@
 # human-activity-dih18
 Human Activity Recognition Using Deep Neural Network
 
-Currently use 2d Neural Network to classify the Human Activities
+Currently use Neural Network to classify Human Activities
 
-Do the following 
- 1. from UCF 101 on my server select the classes you feel are relevant
- 2. copy the folders containing these videos into a new folder and edit VIDEO_PATH in config to this folder
- 3. run extract[3d].py to extract random frames from the videos
- 4. run fit[3d].py to make a model from the images
- 5. View online prediction using predict[3d].py <filename> . Leave blank to use webcam
+To run, do the following 
+ 1. Download UCF101 dataset and unpack it into a folder named  videos .
+ 2. Remove any class folder you wish to disregard.
+ 3. Edit the config[3d].py file to set the desired hyperparameters.
+ 4. Run extract[3d].py to extract random frames from the videos.
+ 5. Run fit[3d].py to make a model from the images
+ 6. View online prediction using predict[3d].py <filename> . Leave blank to use webcam
 
-To use 3d convnet do the above steps with 3d.py files
-DTCWT completely uselesss
+To use 3d networks do the above steps with 3d.py files
+
+[A report on the various methods used](https://docs.google.com/document/d/1DgRkhRfk6W0o-6MjYYescqEKPt1YiK5UZsb9LRnsMPg/edit?usp=sharing)
