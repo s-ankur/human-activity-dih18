@@ -1,5 +1,4 @@
 import sys
-import shutil
 from random import random
 
 from keras.utils import generic_utils
@@ -10,14 +9,10 @@ from utility.cv_utils import *
 try:
     category_names = os.listdir(VIDEO_PATH)
     print("Processing %d categories" % len(category_names))
-    if os.path.isdir(IMAGE_PATH):
-        shutil.rmtree(IMAGE_PATH, ignore_errors=True)
     os.mkdir(IMAGE_PATH)
-    
     for category_name in category_names:
         print("Processing Category :",category_name)
         source_directory = os.path.join(VIDEO_PATH, category_name)
-        
         all_video_paths = listdirp(source_directory)
         train_video_paths,test_video_paths = train_test_split(all_video_paths,test_size=TEST_TRAIN_SPLIT)
         for train_or_test ,video_paths in ('train',train_video_paths),('test',test_video_paths):
