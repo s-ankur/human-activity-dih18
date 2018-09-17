@@ -6,7 +6,7 @@ from model3d import *
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 try:
-    X_train, X_test, y_train, y_test  = load_data(categories)
+    X_train, X_test, y_train, y_test = load_data(categories)
     start_time = time()
     history = model.fit(X_train, y_train,
                         validation_data=(X_test, y_test),
@@ -18,6 +18,6 @@ try:
     y_pred = model.predict(X_test)
     save_metrics(y_test, y_pred, time_trained, categories, RESULT_PATH)
 except KeyboardInterrupt:
-    print("Interrupted Training: Exiting")    
+    print("Interrupted Training: Exiting")
 finally:
     save_model()

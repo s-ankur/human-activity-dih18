@@ -1,19 +1,16 @@
 import glob
 import os
-
+from keras.optimizers import SGD
 from config import *
 
-categories = glob.glob(os.path.join(IMAGE_PATH,'train','*'))
-print("Categories Found ",len(categories))
+categories = glob.glob(os.path.join(IMAGE_PATH, 'train', '*'))
+print("Categories Found ", len(categories))
 
-from keras.optimizers import SGD
-opt= SGD(lr=0.01, decay=1e-4)
-
-
-MyModel = getattr(__import__(MODEL),(MODEL+'_model'))
+opt = SGD(lr=0.011, decay=1e-4)
+MyModel = getattr(__import__(MODEL), (MODEL + '_model'))
 model = MyModel(input_shape=SIZE + (CHANNELS,), num_classes=len(categories))
-#model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-model.compile(loss = "categorical_crossentropy", optimizer = opt,metrics=['accuracy'])
+model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=['accuracy'])
+
 
 def load_model():
     if not os.path.isdir(RESULT_PATH):
