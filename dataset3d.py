@@ -1,7 +1,7 @@
 from keras.utils import np_utils
-from sklearn.model_selection import train_test_split
 from config3d import *
 from utility.cv_utils import *
+from extractor import Extractor
 
 
 def load_data(categories):
