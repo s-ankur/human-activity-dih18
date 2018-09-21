@@ -10,7 +10,7 @@ STRATEGY = 'uniform'
 # stratified -> generates predictions by respecting the training set’s class distribution.
 # constant -> always predicts a constant label that is provided by the user. expects a constant value in constructor
 
-class DummyClassifierCNNAdaptor:
+class DummyClassifierAdaptor:
 
     def __init__(self, input_shape, num_classes, *_, **__):
         self.classifier = DummyClassifier(strategy=STRATEGY)
@@ -45,4 +45,4 @@ class DummyClassifierCNNAdaptor:
         return str(self.classifier.get_params())
 
 
-dummy_model = DummyClassifierCNNAdaptor
+dummy_model = DummyClassifierAdaptor
