@@ -6,10 +6,10 @@ from config3d import *
 categories = glob.glob(os.path.join(CLIP_PATH, 'train','*'))
 print("Categories Found ", len(categories))
 
-opt = SGD(lr=0.011, decay=1e-4)
+opt = SGD(lr=0.11, decay=1e-4)
 MyModel = getattr(__import__(MODEL), (MODEL + '_model'))
 model = MyModel(input_shape=SIZE3D + (DEPTH, CHANNELS), num_classes=len(categories))
-model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=['accuracy'])
+model.compile(loss="categorical_crossentropy", optimizer='adam', metrics=['accuracy'])
 
 
 def load_model():
