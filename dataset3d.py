@@ -22,7 +22,7 @@ def load_data(categories):
                 frame_array = []
                 for frame in video:
                     if CHANNELS == 1:
-                        frame = im2gray(frame).reshape(frame.shape[:-1], 1)
+                        frame = im2gray(frame).reshape(*frame.shape[:-1], 1)
                     frame_array.append(frame)
                 frame_array = np.array(frame_array)
                 data.append(frame_array)
@@ -30,7 +30,7 @@ def load_data(categories):
         if not EXTRACT:
             X = np.array(data).transpose((0, 2, 3, 4, 1))
             X = X.reshape((X.shape[0], *SIZE3D, DEPTH, CHANNELS))
-            X /= 255
+            X = X/ 255
         else:
             extractor = Extractor()
             X = []

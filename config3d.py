@@ -12,11 +12,12 @@ DEPTH = 3
 CHANNELS = 1
 BATCH_SIZE = 128
 EPOCHS = 30
+EXTRACT = False
 ############### CONFIG ##############
 
-"""
+
 ############### CONFIG_LSTM ##############
-VIDEO_PATH = 'videos'
+"""VIDEO_PATH = 'videos'
 CLIP_PATH = 'clips'
 RESULT_PATH = 'resultslstm'
 MODEL_NAME = 'savedlstm'
