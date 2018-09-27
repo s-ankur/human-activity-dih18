@@ -1,13 +1,11 @@
-import glob
 import os
 from keras.optimizers import SGD
 from config import *
 
-categories = glob.glob(os.path.join(IMAGE_PATH, 'train', '*'))
-print("Categories Found ", len(categories))
+from dataset import categories
 
 opt = SGD(lr=0.011, decay=1e-4)
-MyModel = getattr(__import__(MODEL), (MODEL + '_model'))
+MyModel = getattr(getattr(__import__('models.'+MODEL), MODEL),MODEL + '_model')
 model = MyModel(input_shape=SIZE + (CHANNELS,), num_classes=len(categories))
 model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=['accuracy'])
 
@@ -15,8 +13,10 @@ model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=['accuracy
 def load_model():
     if not os.path.isdir(RESULT_PATH):
         os.mkdir(RESULT_PATH)
-    model.load_weights(os.path.join(RESULT_PATH, MODEL_NAME))
-    print('Loaded model successfully')
+    else:
+
+        model.load_weights(os.path.join(RESULT_PATH, MODEL_NAME))
+        print('Loaded model successfully')
 
 
 def save_model():

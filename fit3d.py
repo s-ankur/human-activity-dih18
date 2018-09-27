@@ -1,12 +1,12 @@
 from time import time
-from dataset3d import load_data
+from dataset import load_data3d
 from evaluate import *
 from model3d import *
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 try:
-    X_train, X_test, y_train, y_test = load_data(categories)
+    X_train, X_test, y_train, y_test = load_data3d()
     start_time = time()
     history = model.fit(X_train, y_train,
                         validation_data=(X_test, y_test),

@@ -6,7 +6,7 @@ from model import *
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 try:
-    X_train, X_test, y_train, y_test = load_data(categories)
+    X_train, X_test, y_train, y_test = load_data()
     start_time = time()
     history = model.fit(X_train, y_train,
                         validation_data=(X_test, y_test),

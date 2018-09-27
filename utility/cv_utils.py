@@ -133,6 +133,21 @@ class Video:
         return int(self.input_video.get(cv2.CAP_PROP_FRAME_COUNT))
 
 
+
+class VideoWriter:
+    fourcc = cv2.VideoWriter_fourcc(*"MPEG")
+
+    def __init__(self,path,size):
+        self.writer = cv2.VideoWriter(path, self.fourcc, 5, size, True)
+
+    def write(self,frame):
+        self.writer.write(frame)
+
+    def __del__(self):
+        self.writer.release()
+
+        
+
 def imshow(image, window_name='image', hold=False, ):
     if not hold:
         cv2.namedWindow(window_name)

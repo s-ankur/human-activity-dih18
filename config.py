@@ -8,13 +8,12 @@ cnn2d_small
 dummy
 """
 
-VIDEO_PATH = 'videos'
-IMAGE_PATH = 'images'
+
 RESULT_PATH = 'results'
 MODEL_NAME = 'saved'
 
 ############### CONFIG_CNN ##############
-MODEL = 'cnn2d_multimodal'
+MODEL = 'cnn2d_small'
 EXTRACT = False
 CHANCE = .1
 TEST_TRAIN_SPLIT = .2
