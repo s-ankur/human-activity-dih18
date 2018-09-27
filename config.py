@@ -8,7 +8,6 @@ cnn2d_small
 dummy
 """
 
-
 RESULT_PATH = 'results'
 MODEL_NAME = 'saved'
 

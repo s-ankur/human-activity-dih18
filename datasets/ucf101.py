@@ -2,13 +2,14 @@
 UCF101 Dataset
 """
 
-import sys
 import random
+import sys
 
 from keras.utils import generic_utils, np_utils
 from sklearn.model_selection import train_test_split
 
-import config, config3d
+import config
+import config3d
 from utility.cv_utils import *
 
 DATA_PATH = 'ucf101'
@@ -16,7 +17,25 @@ VIDEO_PATH = 'videos'
 IMAGE_PATH = 'images'
 CLIP_PATH = 'clips'
 
-categories = os.listdir(os.path.join('datasets', DATA_PATH, VIDEO_PATH))
+categories = ['ApplyEyeMakeup', 'ApplyLipstick', 'Archery', 'BabyCrawling', 'BalanceBeam', 'BandMarching',
+              'BaseballPitch', 'Basketball', 'BasketballDunk',
+              'BenchPress', 'Biking', 'Billiards', 'BlowDryHair', 'BlowingCandles', 'BodyWeightSquats', 'Bowling',
+              'BoxingPunchingBag', 'BoxingSpeedBag',
+              'BreastStroke', 'BrushingTeeth', 'CleanAndJerk', 'CliffDiving', 'CricketBowling', 'CricketShot',
+              'CuttingInKitchen', 'Diving', 'Drumming',
+              'Fencing', 'FieldHockeyPenalty', 'FloorGymnastics', 'FrisbeeCatch', 'FrontCrawl', 'GolfSwing', 'Haircut',
+              'Hammering', 'HammerThrow', 'HandstandPushups', 'HandstandWalking', 'HeadMassage', 'HighJump',
+              'HorseRace', 'HorseRiding', 'HulaHoop', 'IceDancing', 'JavelinThrow', 'JugglingBalls', 'JumpingJack',
+              'JumpRope', 'Kayaking', 'Knitting', 'LongJump', 'Lunges', 'MilitaryParade', 'Mixing', 'MoppingFloor',
+              'Nunchucks', 'ParallelBars', 'PizzaTossing', 'PlayingCello', 'PlayingDaf', 'PlayingDhol', 'PlayingFlute',
+              'PlayingGuitar', 'PlayingPiano', 'PlayingSitar', 'PlayingTabla', 'PlayingViolin', 'PoleVault',
+              'PommelHorse', 'PullUps', 'Punch', 'PushUps', 'Rafting', 'RockClimbingIndoor', 'RopeClimbing', 'Rowing',
+              'SalsaSpin', 'ShavingBeard', 'Shotput', 'SkateBoarding', 'Skiing', 'Skijet', 'SkyDiving',
+              'SoccerJuggling', 'SoccerPenalty', 'StillRings', 'SumoWrestling', 'Surfing', 'Swing', 'TableTennisShot',
+              'TaiChi', 'TennisSwing',
+              'ThrowDiscus', 'TrampolineJumping', 'Typing', 'UnevenBars', 'VolleyballSpiking', 'WalkingWithDog',
+              'WallPushups', 'WritingOnBoard', 'YoYo']
+
 print("Categories Found ", len(categories))
 if len(categories) < 2:
     raise ValueError("Cannot classify %d class" % len(categories))
@@ -29,7 +48,7 @@ def load_data():
         data = []
         labels = []
         for label, category in enumerate(categories):
-            files = glob.glob(os.path.join('dataset', DATA_PATH, IMAGE_PATH, train_or_test, category, '*.jpg'))
+            files = glob.glob(os.path.join('datasets', DATA_PATH, IMAGE_PATH, train_or_test, category, '*.jpg'))
             print("%3d. Category %-50s  %-7d files" % (label, category, len(files)))
             for file in files:
                 image = imread(file)
@@ -58,7 +77,7 @@ def load_data3d():
         data = []
         labels = []
         for label, category in enumerate(categories):
-            files = glob.glob(os.path.join('dataset', DATA_PATH, CLIP_PATH, train_or_test, category, '*.avi'))
+            files = glob.glob(os.path.join('datasets', DATA_PATH, CLIP_PATH, train_or_test, category, '*.avi'))
             print("%3d. Category %-50s  %-7d files" % (label, category, len(files)))
             for file in files:
                 video = Video(file)
@@ -96,7 +115,7 @@ def load_data3d():
 def extract():
     os.mkdir(IMAGE_PATH)
     for label, category in enumerate(categories):
-        files = glob.glob(os.path.join('dataset', DATA_PATH, VIDEO_PATH, category, '*'))
+        files = glob.glob(os.path.join('datasets', DATA_PATH, VIDEO_PATH, category, '*'))
         print("%3d. Category %-50s  %-7d files" % (label, category, len(files)))
         train_video_paths, test_video_paths = train_test_split(files, test_size=config.TEST_TRAIN_SPLIT)
         for train_or_test, video_paths in ('train', train_video_paths), ('test', test_video_paths):
@@ -124,7 +143,7 @@ def extract3d():
     fourcc = cv2.VideoWriter_fourcc(*"MPEG")
     os.mkdir(CLIP_PATH)
     for label, category in enumerate(categories):
-        files = glob.glob(os.path.join('dataset', DATA_PATH, VIDEO_PATH, category, '*'))
+        files = glob.glob(os.path.join('datasets', DATA_PATH, VIDEO_PATH, category, '*'))
         print("%3d. Category %-50s  %-7d files" % (label, category, len(files)))
         train_video_paths, test_video_paths = train_test_split(files, test_size=config.TEST_TRAIN_SPLIT)
         for train_or_test, video_paths in ('train', train_video_paths), ('test', test_video_paths):
@@ -155,3 +174,10 @@ def extract3d():
                         if delete:
                             os.unlink(clip_name)
                             print("Deleting incomplete clip", clip_name)
+
+
+def download():
+    import urllib.request
+    URL = "http://crcv.ucf.edu/data/UCF101/UCF101.rar"
+    destination = os.path.join('datasets', DATA_PATH, 'ucf101.rar')
+    urllib.request.urlretrieve(URL, destination)

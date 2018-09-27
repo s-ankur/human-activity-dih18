@@ -1,7 +1,8 @@
 import json
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 import sklearn.metrics
 from keras.callbacks import CSVLogger, TensorBoard
 

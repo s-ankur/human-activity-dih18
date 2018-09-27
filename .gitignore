@@ -1,6 +1,6 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
 .idea/
+.ipynb_checkpoints/
 *.py[cod]
 *$py.class
 *.jpg
@@ -10,9 +10,5 @@ __pycache__/
 *.avi
 *.gif
 *.h5
-!preliminary-results/*
-images
-clips
-videos
 results
 results3d

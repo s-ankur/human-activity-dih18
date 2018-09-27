@@ -1,10 +1,13 @@
 from time import time
-from dataset import load_data
+
+from config import *
+from dataset import load_data, categories
 from evaluate import *
-from model import *
+from model import load_model, save_model
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
+model = load_model()
 try:
     X_train, X_test, y_train, y_test = load_data()
     start_time = time()
@@ -20,4 +23,4 @@ try:
 except KeyboardInterrupt:
     print("Interrupted Training: Exiting")
 finally:
-    save_model()
+    save_model(model)

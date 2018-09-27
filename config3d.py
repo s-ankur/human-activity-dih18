@@ -1,7 +1,4 @@
-
 ############### CONFIG_CNN3D ##############
-VIDEO_PATH = 'videos'
-CLIP_PATH = 'clips'
 RESULT_PATH = 'results3d'
 MODEL_NAME = 'saved3d'
 MODEL = 'cnn3d'
@@ -17,8 +14,7 @@ EXTRACT = False
 
 
 ############### CONFIG_LSTM ##############
-"""VIDEO_PATH = 'videos'
-CLIP_PATH = 'clips'
+"""
 RESULT_PATH = 'resultslstm'
 MODEL_NAME = 'savedlstm'
 MODEL = 'lstm'

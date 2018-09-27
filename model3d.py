@@ -1,11 +1,12 @@
 import os
-from keras.optimizers import SGD
-from config3d import *
 
+from keras.optimizers import SGD
+
+from config3d import *
 from dataset import categories
 
 opt = SGD(lr=0.71, decay=1e-4)
-MyModel = getattr(getattr(__import__('models.'+MODEL), MODEL),MODEL + '_model')
+MyModel = getattr(getattr(__import__('models.' + MODEL), MODEL), MODEL + '_model')
 model = MyModel(input_shape=SIZE3D + (DEPTH, CHANNELS), num_classes=len(categories))
 model.compile(loss="categorical_crossentropy", optimizer='adam', metrics=['accuracy'])
 
