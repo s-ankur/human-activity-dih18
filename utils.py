@@ -26,6 +26,22 @@ class BoundBox:
 
         return self.score
 
+def decode_hogout(hogout,image):
+    (rects, weights) = hogout
+    boxes = []
+    for (x, y, w, h),weight in zip(rects,weights):
+        if weight>.5:
+            print(x,y,w,h)
+            x/=image.shape[1]
+            y/=image.shape[0]
+            w/=image.shape[1]
+            h/=image.shape[0]
+            box = BoundBox(x,y,x+w,y+h,weight)
+            box.label = 0
+            box.score = weight
+            boxes.append(box)
+    return boxes
+
 
 class WeightReader:
     def __init__(self, weight_file):

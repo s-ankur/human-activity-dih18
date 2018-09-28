@@ -1,4 +1,5 @@
-DATASET = 'sdha2010'
+from config import DATASET
+
 
 dataset = getattr(__import__('datasets.' + DATASET), DATASET)
 load_data = dataset.load_data

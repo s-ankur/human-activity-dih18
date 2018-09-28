@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 import config
 from utility.cv_utils import *
 
-categories = ['shake_hands', 'hug', 'kick', 'point', 'punch', 'push']
+categories = ['shake_hands', 'hugging', 'kicking', 'standing', 'punching', 'pushing']
 
 """
 # location to preprocessed data

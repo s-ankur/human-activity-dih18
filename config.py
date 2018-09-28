@@ -10,6 +10,7 @@ dummy
 
 RESULT_PATH = 'results'
 MODEL_NAME = 'saved'
+DATASET = 'sdha2010'
 
 ############### CONFIG_CNN ##############
 MODEL = 'cnn2d_small'
