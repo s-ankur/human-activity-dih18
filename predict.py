@@ -29,8 +29,6 @@ try:
         frame = cv2.resize(frame, SIZE)
         X_predict = frame.reshape((1, *frame.shape,1))
         prediction = model.predict(X_predict)
-        prediction = 1.7*random.random(prediction.shape)/3+1.3*prediction/3
-        prediction[prediction<0]=0.1
         index = np.argmax(prediction)
         text ="%s %.3f"%(categories[index],prediction[0][index])
         print(text)
