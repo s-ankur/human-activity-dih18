@@ -9,16 +9,19 @@ from dataset import categories
 
 def load_model():
     try:
-        model = model_from_json(MODEL_NAME + '.json')
-        model.load_weights(os.path.join(RESULT_PATH, MODEL_NAME))
+        with open(os.path.join(RESULT_PATH, MODEL_NAME)+ '.json') as model_file:
+            model = model_from_json(model_file.read())
+        model.load_weights(os.path.join(RESULT_PATH, MODEL_NAME)+'.h5')
         print('Loaded model successfully')
-    except:
+    except Exception as e:
+        print(e)
         if not os.path.isdir(RESULT_PATH):
             os.mkdir(RESULT_PATH)
         opt = SGD(lr=0.011, decay=1e-4)
         MyModel = getattr(getattr(__import__('models.' + MODEL), MODEL), MODEL + '_model')
         model = MyModel(input_shape=SIZE + (CHANNELS,), num_classes=len(categories))
         model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=['accuracy'])
+        print('Created Model successfully')
     return model
 
 

@@ -2,7 +2,7 @@ import numpy as np
 
 
 class BoundBox:
-    def __init__(self, xmin, ymin, xmax, ymax, c=None, classes=None):
+    def __init__(self, xmin, ymin, xmax, ymax,c=None, classes=None):
         self.xmin = xmin
         self.ymin = ymin
         self.xmax = xmax
@@ -25,6 +25,12 @@ class BoundBox:
             self.score = self.classes[self.get_label()]
 
         return self.score
+
+    def __iter__(self):
+        yield self.xmin
+        yield self.ymin
+        yield self.xmax
+        yield self.ymax
 
 def decode_hogout(hogout,image):
     (rects, weights) = hogout

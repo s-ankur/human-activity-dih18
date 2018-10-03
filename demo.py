@@ -4,6 +4,8 @@ import model as cnn_model
 import model_yolo
 from utility.cv_utils import *
 from utils import *
+from imutils.object_detection import non_max_suppression
+from math import isclose
 
 
 def draw_boxes(image, boxes):
@@ -45,7 +47,7 @@ def draw_boxes(image, boxes):
 
 if __name__ == '__main__':
     SHOW = False
-    YOLO =False
+    YOLO =True
     if len(sys.argv) == 2:
         video_path = sys.argv[1]
     else:
@@ -59,8 +61,11 @@ if __name__ == '__main__':
     dummy_array = np.zeros((1, 1, 1, 1, model_yolo.TRUE_BOX_BUFFER, 4))
     fourcc = cv2.VideoWriter_fourcc(*"MPEG")
     clip = cv2.VideoWriter('demo.avi', fourcc, 30, (1024, 1024))
+    y,x=video.read().shape[:2]
+    t=min(x,y)
     for image in video:
         try:
+            image = image[:t,:t,:]            
             image = cv2.resize(image, (1024, 1024))
             inp = cv2.resize(image, (416, 416))
             if YOLO:
@@ -77,12 +82,21 @@ if __name__ == '__main__':
             else:
                 hogout = hog.detectMultiScale(image, winStride=(4,4),padding=(8, 8), scale=1.05)
                 boxes = decode_hogout(hogout,image)
-            image = draw_boxes(image, boxes)
+            rects = np.array([[x*image.shape[0], y*image.shape[1], x2*image.shape[0], y2*image.shape[1]] for (x, y, x2, y2) in boxes])
+            print(rects)
+            pick = non_max_suppression(rects, probs=None, overlapThresh=.065)
+            pickb=[]
+            for box in boxes:
+                for [x, y, x2, y2] in pick:
+                    if isclose(x,box.xmin*image.shape[0],abs_tol=1)and isclose(y,box.ymin*image.shape[1],abs_tol=1) and isclose(x2,box.xmax*image.shape[0],abs_tol=1) and isclose(y2,box.ymax*image.shape[1],abs_tol=1):
+                        pickb.append(box)
+            print(len(pickb),len(boxes))
+            image = draw_boxes(image, pickb)
             clip.write(image.astype('uint8'))
             if SHOW:
                 cv2.imshow('window', image)
                 cv2.waitKey(1)
-            print (len(boxes))
+            #print (len(boxes))
         except Exception as s:
             print(s)
             if s == KeyboardInterrupt:

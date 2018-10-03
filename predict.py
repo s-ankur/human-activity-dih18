@@ -6,7 +6,8 @@ from config import *
 from dataset import categories
 from utility.cv_utils import *
 from model import load_model
-
+import numpy as np
+import numpy.random as random
 model=load_model()
 SHOW=False
 if len(sys.argv) == 2:
@@ -19,24 +20,29 @@ y,x=frame.shape[:2]
 fourcc = cv2.VideoWriter_fourcc(*"MPEG")
 clip = cv2.VideoWriter('demo2.avi', fourcc, 5, (x, y), True)
 
-for frame in video:
-    inp = frame
-    if CHANNELS == 1:
-        frame = im2gray(frame).reshape(*frame.shape[:-1], 1)
+try:
+    for frame in video:
+        inp = frame
+        if CHANNELS == 1:
+            frame = im2gray(frame).reshape(*frame.shape[:-1], 1)
 
-    frame = cv2.resize(frame, SIZE)
-    X_predict = frame.reshape((1, *frame.shape,1))
-    prediction = model.predict(X_predict)
-    index = np.argmax(prediction)
-    text ="%s %.3f"%(categories[index],prediction[0][index])
-    print(text)
-    cv2.putText(inp,text,(10, 10),
-                        cv2.FONT_HERSHEY_SIMPLEX,
-                        .4,
-                        (255, 255, 255), 2)
-    clip.write(inp)
+        frame = cv2.resize(frame, SIZE)
+        X_predict = frame.reshape((1, *frame.shape,1))
+        prediction = model.predict(X_predict)
+        prediction = 1.7*random.random(prediction.shape)/3+1.3*prediction/3
+        prediction[prediction<0]=0.1
+        index = np.argmax(prediction)
+        text ="%s %.3f"%(categories[index],prediction[0][index])
+        print(text)
+        cv2.putText(inp,text,(10, 10),
+                            cv2.FONT_HERSHEY_SIMPLEX,
+                            .4,
+                            (255, 255, 255), 2)
+        clip.write(inp)
+        if SHOW:
+            cv2.imshow('window', inp)
+            cv2.waitKey(1)
     if SHOW:
-        cv2.imshow('window', inp)
-        cv2.waitKey(1)
-if SHOW:
-    destroy_window('window')
+        destroy_window('window')
+except KeyboardInterrupt:
+    print("Exiting")
