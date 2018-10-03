@@ -8,8 +8,7 @@ Till now 2 different datasets are used. UCF101 and SDHA2010
 The project depends on keras, sklearn, opencv, tqdm and their respective dependencies
 
 To train, do the following 
- 1. Edit the config[3d].py file to set the desired hyperparameters.
- 2. Go to dataset.py and change the DATASET variable to either `ucf101` or `shda2010`
+ 1. Edit the config[3d].py file to set the desired hyperparameters and select the `DATASET` as `ucf101` or `sdha2010`.
  3. To download the dataset automatically use the command
     `python dataset.py download`
     
