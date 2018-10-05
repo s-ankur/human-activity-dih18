@@ -47,10 +47,10 @@ def draw_boxes(image, boxes):
 
 
 def preprocess(image):
-    # y, x = image.shape[:2]
-    # t = min(x, y)
-    # image = image[:t, :t, :]
-    image = cv2.resize(image, (1024, 1024))
+    y, x = image.shape[:2]
+    t = min(x, y)
+    image = image[:t, :t, :]
+    #image = cv2.resize(image, (1024, 1024))
     inp = cv2.resize(image, (416, 416))
     return inp
 
