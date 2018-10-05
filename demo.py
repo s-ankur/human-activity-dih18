@@ -105,7 +105,7 @@ def suppress(boxes, shape):
     return ans
 
 
-'https://drive.google.com/file/d/1ecI2V5rx1_uZ3cMY6q9yNDujfQo_opn1/view?usp=sharing'
+URL='https://drive.google.com/file/d/1ecI2V5rx1_uZ3cMY6q9yNDujfQo_opn1/view?usp=sharing'
 
 if __name__ == '__main__':
     import argparse
@@ -114,8 +114,12 @@ if __name__ == '__main__':
     parser.add_argument('video_path',nargs='?', default=0)
     parser.add_argument('--show', action='store_true')
     parser.add_argument('--hog', action='store_true')
+    parser.add_argument('--download',action='store_true')
 
     args = parser.parse_args()
+
+    if args.download:
+        download_file(URL,'weights_coco.h5')
 
     print('Input Stream:', args.video_path)
 
