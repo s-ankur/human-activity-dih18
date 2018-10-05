@@ -168,7 +168,7 @@ if __name__ == '__main__':
             if args.suppress:
                 detected = suppress(detected, inp.shape)
             # print(len(detected),len(selected))
-            boxes = find_activity(boxes)
+            detected = find_activity(detected)
             draw_boxes(inp, detected)
             clip.write(inp.astype('uint8'))
             if args.show:
