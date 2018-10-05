@@ -109,6 +109,28 @@ def suppress(boxes, shape):
     return ans
 
 
+def find_activity(boxes):
+    persons = list(filter(lambda box: box.get_label() == 'person', boxes))
+    if len(persons) < 2:
+        return boxes
+    ymin = float('inf')
+    ymax = float('-inf')
+    xmin = float('inf')
+    xmax = float('-inf')
+    s = 0
+    for person in persons:
+        ymin = max(person.ymin, ymin)
+        xmin = max(person.xmin, xmin)
+        xmax = min(person.xmax, xmax)
+        ymax = min(person.ymax, ymax)
+        s += person.get_score()
+
+    activity = BoundBox(xmin, ymin, xmax, ymax)
+    activity.score = s / len(persons)
+    activity.label = 'activity'
+    boxes.append (activity)
+    return boxes
+
 URL = 'https://drive.google.com/file/d/1ecI2V5rx1_uZ3cMY6q9yNDujfQo_opn1/view?usp=sharing'
 
 if __name__ == '__main__':
@@ -146,6 +168,7 @@ if __name__ == '__main__':
             if args.suppress:
                 detected = suppress(detected, inp.shape)
             # print(len(detected),len(selected))
+            boxes = find_activity(boxes)
             draw_boxes(inp, detected)
             clip.write(inp.astype('uint8'))
             if args.show:
