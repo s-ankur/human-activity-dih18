@@ -16,9 +16,9 @@ def draw_boxes(image, boxes):
         ymin = int(box.ymin * image_h)
         xmax = int(box.xmax * image_w)
         ymax = int(box.ymax * image_h)
-        label=box.get_label()
-        if label==-1:
-            category='activity'
+        label = box.get_label()
+        if label == -1:
+            category = 'activity'
         else:
             category = model_yolo.categories[label]
         text = category + ' ' + "%.2f%%" % (box.get_score() * 100)
@@ -53,8 +53,7 @@ def preprocess(image):
     y, x = image.shape[:2]
     t = min(x, y)
     image = image[:t, :t, :]
-    inp = cv2.resize(image, (416, 416))
-    return inp
+    return cv2.resize(image, (416, 416))
 
 
 def rects_from_boxes(boxes, shape):
@@ -164,9 +163,9 @@ if __name__ == '__main__':
     fourcc = cv2.VideoWriter_fourcc(*"MPEG")
     clip = cv2.VideoWriter('demo.avi', fourcc, 30, (1024, 1024))
 
-    for image in video:
+    for frame in video:
         try:
-            inp = preprocess(image)
+            inp = preprocess(frame)
             detected = detector.detect(inp)
             if args.suppress:
                 detected = suppress(detected, inp.shape)
