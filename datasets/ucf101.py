@@ -177,7 +177,6 @@ def extract3d():
 
 
 def download():
-    import urllib.request
-    URL = "http://crcv.ucf.edu/data/UCF101/UCF101.rar"
-    destination = os.path.join('datasets', DATA_PATH, 'ucf101.rar')
-    urllib.request.urlretrieve(URL, destination)
+    print("Downloading file")
+    download_file(r'http://crcv.ucf.edu/data/UCF101/UCF101.rar', 'ucf101.rar')
+    print("Done")

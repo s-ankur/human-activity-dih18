@@ -90,8 +90,9 @@ def load_data3d():
     pass
 
 
+URL = r"http://cvrc.ece.utexas.edu/SDHA2010/videos/competition_1/ut-interaction_segmented_set1.zip"
+
 def download():
-    import urllib.request
-    URL = "http://cvrc.ece.utexas.edu/SDHA2010/videos/competition_1/ut-interaction_segmented_set1.zip"
-    destination = os.path.join('datasets', DATA_PATH, 'ut-interaction_segmented_set1.zip')
-    urllib.request.urlretrieve(URL, destination)
+    print("Downloading file")
+    download_file(URL,'sdha.zip')
+    print("Done")

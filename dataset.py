@@ -10,6 +10,6 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('action', choices=['extract', 'extract3d', 'download'], help="no")
+    parser.add_argument('action', choices=['extract', 'extract3d', 'download'])
     args = parser.parse_args()
     getattr(dataset, args.action)()

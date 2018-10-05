@@ -10,10 +10,10 @@ dummy
 
 RESULT_PATH = 'results'
 MODEL_NAME = 'saved'
-DATASET = 'ucf101'
+DATASET = 'sdha2010'
 
 ############### CONFIG_CNN ##############
-MODEL = 'cnn2d'
+MODEL = 'cnn2d_very_small'
 EXTRACT = False
 CHANCE = .1
 TEST_TRAIN_SPLIT = .2

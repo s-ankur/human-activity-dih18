@@ -1,7 +1,9 @@
 from __future__ import print_function, division
-
+import requests
 import cmath
 import math
+
+from keras.utils import generic_utils
 
 
 def dist(a, b=None):
@@ -36,3 +38,14 @@ def try_to(f, args=None, kwargs=None, max_try=-1, exceptions=(KeyError, ValueErr
         except exceptions as e:
             if not silent:
                 print(repr(e))
+
+
+def download_file(url,file):
+    response = requests.get(url, stream=True)
+    total_length = int(response.headers.get('content-length'))
+    progressbar = generic_utils.Progbar(total_length)
+    with open(file, 'wb') as f:
+        for chunk in response.iter_content(chunk_size=1024):
+            progressbar.add(len(chunk))
+            f.write(chunk)
+        progressbar.update(len(chunk))

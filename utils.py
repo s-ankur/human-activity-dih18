@@ -1,8 +1,10 @@
+import math
+
 import numpy as np
 
 
 class BoundBox:
-    def __init__(self, xmin, ymin, xmax, ymax,c=None, classes=None):
+    def __init__(self, xmin, ymin, xmax, ymax, c=None, classes=None):
         self.xmin = xmin
         self.ymin = ymin
         self.xmax = xmax
@@ -32,17 +34,24 @@ class BoundBox:
         yield self.xmax
         yield self.ymax
 
-def decode_hogout(hogout,image):
+    def __eq__(self, other):
+        for i, j in zip(self, other):
+            if not math.isclose(i, j, abs_tol=1):
+                return False
+        return True
+
+
+def decode_hogout(hogout, image):
     (rects, weights) = hogout
     boxes = []
-    for (x, y, w, h),weight in zip(rects,weights):
-        if weight>.5:
-            print(x,y,w,h)
-            x/=image.shape[1]
-            y/=image.shape[0]
-            w/=image.shape[1]
-            h/=image.shape[0]
-            box = BoundBox(x,y,x+w,y+h,weight)
+    for (x, y, w, h), weight in zip(rects, weights):
+        if weight > .5:
+            print(x, y, w, h)
+            x /= image.shape[1]
+            y /= image.shape[0]
+            w /= image.shape[1]
+            h /= image.shape[0]
+            box = BoundBox(x, y, x + w, y + h, weight)
             box.label = 0
             box.score = weight
             boxes.append(box)

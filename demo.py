@@ -1,11 +1,11 @@
-import sys
+from math import isclose
+
+from imutils.object_detection import non_max_suppression
 
 import model as cnn_model
 import model_yolo
 from utility.cv_utils import *
 from utils import *
-from imutils.object_detection import non_max_suppression
-from math import isclose
 
 
 def draw_boxes(image, boxes):
@@ -32,7 +32,7 @@ def draw_boxes(image, boxes):
             roi = cv2.resize(roi, cnn_model.SIZE)
             roi = roi.reshape(1, *roi.shape, 1)
 
-            prediction = phase_two.predict(roi)[0]
+            prediction = classifier.predict(roi)[0]
             index = np.argmax(prediction)
             activity = cnn_model.categories[index]
             text = activity
@@ -45,62 +45,105 @@ def draw_boxes(image, boxes):
     return image
 
 
+def preprocess(image):
+    y, x = image.shape[:2]
+    t = min(x, y)
+    image = image[:t, :t, :]
+    image = cv2.resize(image, (1024, 1024))
+    inp = cv2.resize(image, (416, 416))
+    return inp
+
+
+def rects_from_boxes(boxes, shape):
+    rects = np.array(
+        [[x * shape[1], y * shape[0], x2 * shape[1], y2 * shape[0]] for (x, y, x2, y2) in boxes])
+    return rects
+
+
+class HOGDetector:
+    def __init__(self):
+        self.hog = cv2.HOGDescriptor()
+        self.hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
+
+    def detect(self, image):
+        hogout = self.hog.detectMultiScale(image, winStride=(4, 4), padding=(8, 8), scale=1.05)
+        boxes = decode_hogout(hogout, image)
+        return boxes
+
+
+class YOLODectector:
+    def __init__(self):
+        self.model = model_yolo.load_model()
+        self.dummy_array = np.zeros((1, 1, 1, 1, model_yolo.TRUE_BOX_BUFFER, 4))
+
+    def detect(self, inp):
+        input_image = inp / 255.
+        input_image = input_image[:, :, ::-1]
+        input_image = np.expand_dims(input_image, 0)
+        netout = self.model.predict([input_image, self.dummy_array])
+        boxes = decode_netout(netout[0],
+                              obj_threshold=model_yolo.OBJ_THRESHOLD,
+                              nms_threshold=model_yolo.NMS_THRESHOLD,
+                              anchors=model_yolo.ANCHORS,
+                              nb_class=model_yolo.CLASS)
+        return boxes
+
+
+def suppress(boxes, shape):
+    rects = rects_from_boxes(boxes, shape)
+    picked = non_max_suppression(rects, overlapThresh=.065)
+    #print(picked)
+    ans = []
+    for (x, y, x2, y2) in picked:
+        for box in boxes:
+            (X, Y, X2, Y2)=box
+            if isclose(x, X * shape[0], abs_tol=2) and \
+                    isclose(y, Y * shape[1], abs_tol=2) and \
+                    isclose(x2, X2 * shape[0], abs_tol=2) and \
+                    isclose(y2, Y2 * shape[1], abs_tol=2):
+                ans.append(box)
+    return ans
+
+
+'https://drive.google.com/file/d/1ecI2V5rx1_uZ3cMY6q9yNDujfQo_opn1/view?usp=sharing'
+
 if __name__ == '__main__':
-    SHOW = False
-    YOLO =True
-    if len(sys.argv) == 2:
-        video_path = sys.argv[1]
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('video_path',nargs='?', default=0)
+    parser.add_argument('--show', action='store_true')
+    parser.add_argument('--hog', action='store_true')
+
+    args = parser.parse_args()
+
+    print('Input Stream:', args.video_path)
+
+    # tracker = ObjectTracker()
+    if args.hog:
+        detector = HOGDetector()
     else:
-        video_path = 0
-    print('detecting ',video_path)
-    hog = cv2.HOGDescriptor()
-    hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
-    phase_one = model_yolo.load_model()
-    phase_two = cnn_model.load_model()
-    video = Video(video_path)
-    dummy_array = np.zeros((1, 1, 1, 1, model_yolo.TRUE_BOX_BUFFER, 4))
+        detector = YOLODectector()
+
+    classifier = cnn_model.load_model()
+    video = Video(args.video_path)
     fourcc = cv2.VideoWriter_fourcc(*"MPEG")
     clip = cv2.VideoWriter('demo.avi', fourcc, 30, (1024, 1024))
-    y,x=video.read().shape[:2]
-    t=min(x,y)
-    for image in video:
-        try:
-            image = image[:t,:t,:]            
-            image = cv2.resize(image, (1024, 1024))
-            inp = cv2.resize(image, (416, 416))
-            if YOLO:
-                
-                input_image = inp / 255.
-                input_image = input_image[:, :, ::-1]
-                input_image = np.expand_dims(input_image, 0)
-                netout = phase_one.predict([input_image, dummy_array])
-                boxes = decode_netout(netout[0],
-                                      obj_threshold=model_yolo.OBJ_THRESHOLD,
-                                      nms_threshold=model_yolo.NMS_THRESHOLD,
-                                      anchors=model_yolo.ANCHORS,
-                                      nb_class=model_yolo.CLASS)
-            else:
-                hogout = hog.detectMultiScale(image, winStride=(4,4),padding=(8, 8), scale=1.05)
-                boxes = decode_hogout(hogout,image)
-            rects = np.array([[x*image.shape[0], y*image.shape[1], x2*image.shape[0], y2*image.shape[1]] for (x, y, x2, y2) in boxes])
-            print(rects)
-            pick = non_max_suppression(rects, probs=None, overlapThresh=.065)
-            pickb=[]
-            for box in boxes:
-                for [x, y, x2, y2] in pick:
-                    if isclose(x,box.xmin*image.shape[0],abs_tol=1)and isclose(y,box.ymin*image.shape[1],abs_tol=1) and isclose(x2,box.xmax*image.shape[0],abs_tol=1) and isclose(y2,box.ymax*image.shape[1],abs_tol=1):
-                        pickb.append(box)
-            print(len(pickb),len(boxes))
-            image = draw_boxes(image, pickb)
-            clip.write(image.astype('uint8'))
-            if SHOW:
-                cv2.imshow('window', image)
+
+    try:
+        for image in video:
+            inp = preprocess(image)
+            detected = detector.detect(inp)
+            #detected = suppress(detected, inp.shape)
+            #print(len(detected),len(selected))
+            draw_boxes(inp, detected)
+            clip.write(inp.astype('uint8'))
+            if args.show:
+                cv2.imshow('window', inp)
                 cv2.waitKey(1)
-            #print (len(boxes))
-        except Exception as s:
-            print(s)
-            if s == KeyboardInterrupt:
-                break
-    clip.release()
-    if SHOW:
+            # print (len(boxes))
+        clip.release()
+    except KeyboardInterrupt:
+        print("Interrupted")
+    if args.show:
         destroy_window('window')
