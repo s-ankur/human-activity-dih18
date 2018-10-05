@@ -27,7 +27,7 @@ def draw_boxes(image, boxes):
                     (255, 255, 255), 2)
         cv2.rectangle(image, (xmin, ymin), (xmax, ymax), (200, 200, 200), 3)
 
-        if category == 'person':
+        if category in ('person', 'activity'):
             roi = image[ymin:ymax, xmin:xmax, :]
             roi = im2gray(roi)
             roi = cv2.resize(roi, cnn_model.SIZE)
@@ -50,7 +50,6 @@ def preprocess(image):
     y, x = image.shape[:2]
     t = min(x, y)
     image = image[:t, :t, :]
-    #image = cv2.resize(image, (1024, 1024))
     inp = cv2.resize(image, (416, 416))
     return inp
 
@@ -128,8 +127,9 @@ def find_activity(boxes):
     activity = BoundBox(xmin, ymin, xmax, ymax)
     activity.score = s / len(persons)
     activity.label = 'activity'
-    boxes.append (activity)
+    boxes.append(activity)
     return boxes
+
 
 URL = 'https://drive.google.com/file/d/1ecI2V5rx1_uZ3cMY6q9yNDujfQo_opn1/view?usp=sharing'
 
