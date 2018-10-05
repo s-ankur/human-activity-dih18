@@ -46,7 +46,7 @@ def decode_hogout(hogout, image):
     boxes = []
     for (x, y, w, h), weight in zip(rects, weights):
         if weight > .5:
-            print(x, y, w, h)
+           # print(x, y, w, h)
             x /= image.shape[1]
             y /= image.shape[0]
             w /= image.shape[1]
