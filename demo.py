@@ -28,7 +28,7 @@ def draw_boxes(image, boxes):
         cv2.rectangle(image, (xmin, ymin), (xmax, ymax), (200, 200, 200), 3)
 
         if category == 'person':
-            roi = image[ymin:ymax, xmin:xmax, :]          
+            roi = image[ymin:ymax, xmin:xmax, :]
             roi = im2gray(roi)
             roi = cv2.resize(roi, cnn_model.SIZE)
             roi = roi.reshape(1, *roi.shape, 1)
@@ -47,9 +47,9 @@ def draw_boxes(image, boxes):
 
 
 def preprocess(image):
-    #y, x = image.shape[:2]
-    #t = min(x, y)
-    #image = image[:t, :t, :]
+    # y, x = image.shape[:2]
+    # t = min(x, y)
+    # image = image[:t, :t, :]
     image = cv2.resize(image, (1024, 1024))
     inp = cv2.resize(image, (416, 416))
     return inp
@@ -71,36 +71,36 @@ class HOGDetector:
         boxes = decode_hogout(hogout, image)
         return boxes
 
-from time import time
+
 class YOLODectector:
     def __init__(self):
         self.model = model_yolo.load_model()
         self.dummy_array = np.zeros((1, 1, 1, 1, model_yolo.TRUE_BOX_BUFFER, 4))
 
     def detect(self, inp):
-#        now =time()
+        #        now =time()
         input_image = inp / 255.
         input_image = input_image[:, :, ::-1]
         input_image = np.expand_dims(input_image, 0)
         netout = self.model.predict([input_image, self.dummy_array])
-#        then =time()
+        #        then =time()
         boxes = decode_netout(netout[0],
                               obj_threshold=.45,
                               nms_threshold=model_yolo.NMS_THRESHOLD,
                               anchors=model_yolo.ANCHORS,
                               nb_class=model_yolo.CLASS)
-#        print(then-now,time()-then)
+        #        print(then-now,time()-then)
         return boxes
 
 
 def suppress(boxes, shape):
     rects = rects_from_boxes(boxes, shape)
     picked = non_max_suppression(rects, overlapThresh=.065)
-    #print(picked)
+    # print(picked)
     ans = []
     for (x, y, x2, y2) in picked:
         for box in boxes:
-            (X, Y, X2, Y2)=box
+            (X, Y, X2, Y2) = box
             if isclose(x, X * shape[0], abs_tol=2) and \
                     isclose(y, Y * shape[1], abs_tol=2) and \
                     isclose(x2, X2 * shape[0], abs_tol=2) and \
@@ -109,23 +109,22 @@ def suppress(boxes, shape):
     return ans
 
 
-URL='https://drive.google.com/file/d/1ecI2V5rx1_uZ3cMY6q9yNDujfQo_opn1/view?usp=sharing'
+URL = 'https://drive.google.com/file/d/1ecI2V5rx1_uZ3cMY6q9yNDujfQo_opn1/view?usp=sharing'
 
 if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('video_path',nargs='?', default=0)
+    parser.add_argument('video_path', nargs='?', default=0)
     parser.add_argument('--show', action='store_true')
     parser.add_argument('--hog', action='store_true')
-    parser.add_argument('--download',action='store_true')
-    parser.add_argument('--suppress',action='store_true')
-
+    parser.add_argument('--download', action='store_true')
+    parser.add_argument('--suppress', action='store_true')
 
     args = parser.parse_args()
 
     if args.download:
-        download_file(URL,'weights_coco.h5')
+        download_file(URL, 'weights_coco.h5')
 
     print('Input Stream:', args.video_path)
 
@@ -140,25 +139,24 @@ if __name__ == '__main__':
     fourcc = cv2.VideoWriter_fourcc(*"MPEG")
     clip = cv2.VideoWriter('demo.avi', fourcc, 30, (1024, 1024))
 
-
     for image in video:
         try:
             inp = preprocess(image)
             detected = detector.detect(inp)
             if args.suppress:
                 detected = suppress(detected, inp.shape)
-            #print(len(detected),len(selected))
+            # print(len(detected),len(selected))
             draw_boxes(inp, detected)
             clip.write(inp.astype('uint8'))
             if args.show:
                 cv2.imshow('window', inp)
-                key=cv2.waitKey(1)
+                key = cv2.waitKey(1)
             # print (len(boxes))
-        except  KeyboardInterrupt  :
+        except  KeyboardInterrupt:
             break
         except Exception:
             raise
-            
+
     clip.release()
     if args.show:
         destroy_window('window')

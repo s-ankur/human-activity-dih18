@@ -1,13 +1,14 @@
-import sys
+import argparse
 
 from model3d import *
 from utility.cv_utils import *
 
-if len(sys.argv) == 2:
-    video_path = sys.argv[1]
-else:
-    video_path = glob.glob('/dev/video*')[0]
-video = Video(video_path)
+parser = argparse.ArgumentParser()
+parser.add_argument('video_path', nargs='?', default=0)
+parser.add_argument('--show', action='store_true')
+args = parser.parse_args()
+
+video = Video(args.video_path)
 
 frame_array = []
 for frame in video:
