@@ -16,8 +16,11 @@ def draw_boxes(image, boxes):
         ymin = int(box.ymin * image_h)
         xmax = int(box.xmax * image_w)
         ymax = int(box.ymax * image_h)
-
-        category = model_yolo.categories[box.get_label()]
+        label=box.get_label()
+        if label==-1:
+            category='activity'
+        else:
+            category = model_yolo.categories[label]
         text = category + ' ' + "%.2f%%" % (box.get_score() * 100)
         cv2.putText(image,
                     text,
@@ -126,7 +129,7 @@ def find_activity(boxes):
 
     activity = BoundBox(xmin, ymin, xmax, ymax)
     activity.score = s / len(persons)
-    activity.label = 'activity'
+    activity.label = -1
     boxes.append(activity)
     return boxes
 
