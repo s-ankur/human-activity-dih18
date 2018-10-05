@@ -19,7 +19,8 @@ clip = cv2.VideoWriter('demo2.avi', fourcc, 5, (x, y), True)
 
 for frame in video:
     try:
-        inp = frame
+        inp =  cv2.resize(frame, (416, 416))
+
         if CHANNELS == 1:
             frame = im2gray(frame).reshape(*frame.shape[:-1], 1)
 
@@ -32,7 +33,7 @@ for frame in video:
         cv2.putText(inp, text, (10, 10),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     .4,
-                    (255, 255, 255), 2)
+                    (255, 0, 0), 2)
         clip.write(inp)
         if args.show:
             cv2.imshow('window', inp)
@@ -41,6 +42,6 @@ for frame in video:
         print("Exiting")
         break
     except Exception as e:
-        print(e.args)
+        raise
 if args.show:
     destroy_window('window')
