@@ -160,6 +160,7 @@ if __name__ == '__main__':
 
     classifier = cnn_model.load_model()
     video = Video(args.video_path)
+
     fourcc = cv2.VideoWriter_fourcc(*"MPEG")
     clip = cv2.VideoWriter('demo.avi', fourcc, 30, (1024, 1024))
 
