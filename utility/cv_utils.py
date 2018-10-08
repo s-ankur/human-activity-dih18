@@ -114,12 +114,12 @@ class Video:
         return image
 
     def __iter__(self):
-        try:
+        
             while True:
-                yield self.read()
-        except ValueError:
-            return
-
+                try:
+                    yield self.read()
+                except ValueError:
+                    pass
     def __enter__(self):
         return self
 
