@@ -52,7 +52,7 @@ def draw_boxes(image, boxes):
 def preprocess(image):
     y, x = image.shape[:2]
     t = min(x, y)
-    image = image[:t, :t, :]
+    image = image[150:t+150, 300:t+300, :]
     return cv2.resize(image, (416, 416))
 
 
@@ -132,6 +132,11 @@ def find_activity(boxes):
     boxes.append(activity)
     return boxes
 
+def rotateImage(image, angle):
+  image_center = tuple(np.array(image.shape[1::-1]) / 2)
+  rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
+  result = cv2.warpAffine(image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
+  return result
 
 URL = 'https://drive.google.com/file/d/1ecI2V5rx1_uZ3cMY6q9yNDujfQo_opn1/view?usp=sharing'
 
@@ -166,6 +171,7 @@ if __name__ == '__main__':
     for frame in video:
         try:
             inp = preprocess(frame)
+            inp =rotateImage(inp,-90)
             detected = detector.detect(inp)
             if args.suppress:
                 detected = suppress(detected, inp.shape)
