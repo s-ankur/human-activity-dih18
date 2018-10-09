@@ -32,13 +32,17 @@ def draw_boxes(image, boxes):
 
         if category in ('person', 'activity'):
             roi = image[ymin:ymax, xmin:xmax, :]
+
             roi = im2gray(roi)
             roi = cv2.resize(roi, cnn_model.SIZE)
             roi = roi.reshape(1, *roi.shape, 1)
 
             prediction = classifier.predict(roi)[0]
             index = np.argmax(prediction)
-            activity = cnn_model.categories[index]
+            if prediction[index] < .5:
+                activity = 'standing'
+            else:
+                activity = cnn_model.categories[index]
             text = activity
             cv2.putText(image,
                         text,
@@ -52,7 +56,7 @@ def draw_boxes(image, boxes):
 def preprocess(image):
     y, x = image.shape[:2]
     t = min(x, y)
-    image = image[150:t+150, 300:t+300, :]
+    image = image[:t, :t, :]
     return cv2.resize(image, (416, 416))
 
 
@@ -111,7 +115,7 @@ def suppress(boxes, shape):
 
 
 def find_activity(boxes):
-    persons = list(filter(lambda box: box.get_label() == 'person', boxes))
+    persons = list(filter(lambda box: box.get_label() == model_yolo.categories.index('person'), boxes))
     if len(persons) < 2:
         return boxes
     ymin = float('inf')
@@ -120,23 +124,31 @@ def find_activity(boxes):
     xmax = float('-inf')
     s = 0
     for person in persons:
-        ymin = max(person.ymin, ymin)
-        xmin = max(person.xmin, xmin)
-        xmax = min(person.xmax, xmax)
-        ymax = min(person.ymax, ymax)
+        print(person)
+        ymin = min(person.ymin, ymin)
+        xmin = min(person.xmin, xmin)
+        xmax = max(person.xmax, xmax)
+        ymax = max(person.ymax, ymax)
         s += person.get_score()
 
     activity = BoundBox(xmin, ymin, xmax, ymax)
+    if xmax - xmin > .5 or ymax - ymin > .5:
+        return boxes
     activity.score = s / len(persons)
     activity.label = -1
+    print(activity)
+    for person in persons:
+        boxes.remove(person)
     boxes.append(activity)
     return boxes
 
+
 def rotateImage(image, angle):
-  image_center = tuple(np.array(image.shape[1::-1]) / 2)
-  rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
-  result = cv2.warpAffine(image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
-  return result
+    image_center = tuple(np.array(image.shape[1::-1]) / 2)
+    rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
+    result = cv2.warpAffine(image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
+    return result
+
 
 URL = 'https://drive.google.com/file/d/1ecI2V5rx1_uZ3cMY6q9yNDujfQo_opn1/view?usp=sharing'
 
@@ -149,6 +161,7 @@ if __name__ == '__main__':
     parser.add_argument('--hog', action='store_true')
     parser.add_argument('--download', action='store_true')
     parser.add_argument('--suppress', action='store_true')
+    parser.add_argument('--crop', action='store_true')
 
     args = parser.parse_args()
 
@@ -166,18 +179,21 @@ if __name__ == '__main__':
     classifier = cnn_model.load_model()
     video = Video(args.video_path)
 
+    if args.crop:
+        video.set_roi()
+
     fourcc = cv2.VideoWriter_fourcc(*"MPEG")
     clip = cv2.VideoWriter('demo.avi', fourcc, 30, (1024, 1024))
 
     for frame in video:
         try:
             inp = preprocess(frame)
-            inp =rotateImage(inp,-90)
             detected = detector.detect(inp)
             if args.suppress:
                 detected = suppress(detected, inp.shape)
             # print(len(detected),len(selected))
             detected = find_activity(detected)
+
             draw_boxes(inp, detected)
             clip.write(inp.astype('uint8'))
             if args.show:
@@ -186,8 +202,8 @@ if __name__ == '__main__':
             # print (len(boxes))
         except  KeyboardInterrupt:
             break
-        except Exception:
-            raise
+        except cv2.error:
+            pass
 
     clip.release()
     if args.show:

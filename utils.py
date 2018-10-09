@@ -40,13 +40,16 @@ class BoundBox:
                 return False
         return True
 
+    def __repr__(self):
+        return ' '.join(list(map(str, self))) + ' ' + str(self.label)
+
 
 def decode_hogout(hogout, image):
     (rects, weights) = hogout
     boxes = []
     for (x, y, w, h), weight in zip(rects, weights):
         if weight > .5:
-           # print(x, y, w, h)
+            # print(x, y, w, h)
             x /= image.shape[1]
             y /= image.shape[0]
             w /= image.shape[1]

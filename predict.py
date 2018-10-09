@@ -25,10 +25,13 @@ for frame in video:
             frame = im2gray(frame).reshape(*frame.shape[:-1], 1)
 
         frame = cv2.resize(frame, SIZE)
-        X_predict = frame.reshape((1, *frame.shape, 1))
+        if CHANNELS == 1:
+            X_predict = frame.reshape((1, *frame.shape, 1))
+        else:
+            X_predict = frame.reshape((1, *frame.shape))
         prediction = model.predict(X_predict)
         index = np.argmax(prediction)
-        text = "%s %.3f" % (categories[index], prediction[0][index])
+        text = "%s" % (categories[index])
         print(text)
         cv2.putText(inp, text, (10, 10),
                     cv2.FONT_HERSHEY_SIMPLEX,

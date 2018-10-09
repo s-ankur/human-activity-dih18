@@ -1,9 +1,11 @@
 from __future__ import print_function, division
+
+from collections import defaultdict
+
 import cv2
 import numpy as np
 from contextlib import contextmanager
 from logging import info
-from collections import defaultdict
 
 try:
     from .utils import *
@@ -114,12 +116,13 @@ class Video:
         return image
 
     def __iter__(self):
-        
-            while True:
-                try:
-                    yield self.read()
-                except ValueError:
-                    pass
+
+        while True:
+            try:
+                yield self.read()
+            except ValueError:
+                pass
+
     def __enter__(self):
         return self
 
@@ -133,20 +136,18 @@ class Video:
         return int(self.input_video.get(cv2.CAP_PROP_FRAME_COUNT))
 
 
-
 class VideoWriter:
     fourcc = cv2.VideoWriter_fourcc(*"MPEG")
 
-    def __init__(self,path,size):
+    def __init__(self, path, size):
         self.writer = cv2.VideoWriter(path, self.fourcc, 5, size, True)
 
-    def write(self,frame):
+    def write(self, frame):
         self.writer.write(frame)
 
     def __del__(self):
         self.writer.release()
 
-        
 
 def imshow(image, window_name='image', hold=False, ):
     if not hold:
@@ -226,7 +227,7 @@ class imcrop:
         'done_exit': 3}
 
     def __init__(self, image, window_name='image', bbox=None, ):
-        self.current_pos = (x, y)
+        self.current_pos = (0, 0)
         self.window_name = window_name
         self.image = image
         if bbox is None:
