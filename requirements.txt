@@ -1,6 +1,6 @@
 imgaug==0.2.6
 Keras==2.2.2
-requests==2.19.1
+requests>=2.20.0
 matplotlib==3.0.0
 imutils==0.5.1
 tensorflow==1.10.0
