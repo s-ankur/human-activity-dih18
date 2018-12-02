@@ -11,5 +11,6 @@ __pycache__/
 *.avi
 *.gif
 *.h5
+*.part
 results
 results3d
