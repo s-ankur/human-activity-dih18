@@ -16,7 +16,7 @@ DATASET='ucf101'
 ############### CONFIG_CNN ##############
 MODEL = 'cnn2d'
 EXTRACT = False
-CHANCE = .1
+CHANCE = .05
 TEST_TRAIN_SPLIT = .2
 SIZE = (64, 64)
 CHANNELS = 3
