@@ -5,7 +5,7 @@ UCF101 Dataset
 import random
 import sys
 
-from keras.utils import generic_utils, np_utils
+from keras.utils import  np_utils
 from sklearn.model_selection import train_test_split
 
 import config
@@ -48,7 +48,7 @@ def load_data():
         data = []
         labels = []
         for label, category in enumerate(categories):
-            files = glob.glob(os.path.join('datasets', DATA_PATH, IMAGE_PATH, train_or_test, category, '*.jpg'))
+            files = glob.glob(os.path.join(DATA_PATH, IMAGE_PATH, train_or_test, category, '*.jpg'))
             print("%3d. Category %-50s  %-7d files" % (label, category, len(files)))
             for file in files:
                 image = imread(file)
@@ -77,12 +77,14 @@ def load_data3d():
         data = []
         labels = []
         for label, category in enumerate(categories):
-            files = glob.glob(os.path.join('datasets', DATA_PATH, CLIP_PATH, train_or_test, category, '*.avi'))
+            files = glob.glob(os.path.join(DATA_PATH, CLIP_PATH, train_or_test, category, '*.avi'))
             print("%3d. Category %-50s  %-7d files" % (label, category, len(files)))
             for file in files:
+                print('Loaded',file)
                 video = Video(file)
                 frame_array = []
-                for frame in video:
+                for index in range(len(video)-5):
+                    frame=video.read()
                     if config3d.CHANNELS == 1:
                         frame = im2gray(frame).reshape(*frame.shape[:-1], 1)
                     frame_array.append(frame)
@@ -112,60 +114,59 @@ def load_data3d():
     return ret_X + ret_y
 
 
-def extract():
-    os.mkdir(IMAGE_PATH)
+def extract():    
     for label, category in enumerate(categories):
-        files = glob.glob(os.path.join('datasets', DATA_PATH, VIDEO_PATH, category, '*'))
+        files = glob.glob(os.path.join(DATA_PATH, VIDEO_PATH, category, '*'))
         print("%3d. Category %-50s  %-7d files" % (label, category, len(files)))
         train_video_paths, test_video_paths = train_test_split(files, test_size=config.TEST_TRAIN_SPLIT)
         for train_or_test, video_paths in ('train', train_video_paths), ('test', test_video_paths):
             print('Extracting frames from %d %s videos' % (len(video_paths), train_or_test))
-            destination_directory = os.path.join('dataset', DATA_PATH, IMAGE_PATH, train_or_test, category)
+            destination_directory = os.path.join(DATA_PATH, IMAGE_PATH, train_or_test, category)
             os.makedirs(destination_directory, exist_ok=True)
             image_id = 0
             for video_path in video_paths:
                 video = Video(video_path)
-                progressbar = generic_utils.Progbar(len(video))
                 frame_id = 0
-                for frame in video:
-                    progressbar.add(1)
+                for frame_x in range(len(video)-10):
+                    frame = video.read()
                     if config.CHANCE > random.random():
                         image_path = os.path.join(destination_directory, str(image_id) + '.jpg')
                         imwrite(image_path, frame)
                         image_id += 1
                         frame_id += 1
-                sys.stdout.write('\b' * 100)
                 sys.stdout.write('Extracted %d frames from %s' % (frame_id, video_path))
                 print()
 
 
 def extract3d():
     fourcc = cv2.VideoWriter_fourcc(*"MPEG")
-    os.mkdir(CLIP_PATH)
     for label, category in enumerate(categories):
-        files = glob.glob(os.path.join('datasets', DATA_PATH, VIDEO_PATH, category, '*'))
+        files = glob.glob(os.path.join(DATA_PATH, VIDEO_PATH, category, '*'))
         print("%3d. Category %-50s  %-7d files" % (label, category, len(files)))
         train_video_paths, test_video_paths = train_test_split(files, test_size=config.TEST_TRAIN_SPLIT)
         for train_or_test, video_paths in ('train', train_video_paths), ('test', test_video_paths):
             print('Extracting videos from %d %s videos' % (len(video_paths), train_or_test))
-            destination_directory = os.path.join('dataset', DATA_PATH, IMAGE_PATH, train_or_test, category)
+            destination_directory = os.path.join( DATA_PATH, CLIP_PATH, train_or_test, category)
             os.makedirs(destination_directory, exist_ok=True)
             clip_id = 0
             for video_path in video_paths:
                 print(video_path)
                 video = Video(video_path)
+                length = len(video)-10
                 while True:
                     ret, frame = video.input_video.read()
-                    if not ret:
+                    length-=1
+                    if not ret or not length>0:
                         break
                     if config3d.CHANCE > random.random():
-                        clip_name = os.path.join(CLIP_PATH, train_or_test, category, str(clip_id) + '.avi')
+                        clip_name = os.path.join(DATA_PATH,CLIP_PATH, train_or_test, category, str(clip_id) + '.avi')
                         clip = cv2.VideoWriter(clip_name, fourcc, 5, config3d.SIZE3D, True)
                         clip_id += 1
                         delete = False
                         for i in range(config3d.DEPTH + 1):
                             ret, frame = video.input_video.read()
-                            if ret:
+                            length-=1
+                            if ret and length>0:
                                 frame = cv2.resize(frame, config3d.SIZE3D)
                                 clip.write(frame)
                             else:
