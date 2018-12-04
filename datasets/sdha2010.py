@@ -32,8 +32,8 @@ def preprocess(img):
 
 
 def extract():
-    os.mkdir(os.path.join('datasets', DATA_PATH, IMAGE_PATH))
-    file_list = os.listdir(os.path.join('datasets', DATA_PATH, VIDEO_PATH))
+    os.mkdir(os.path.join( DATA_PATH, IMAGE_PATH))
+    file_list = os.listdir(os.path.join(DATA_PATH, VIDEO_PATH))
     for label, category in enumerate(categories):
         category_files = filter(lambda file: get_class_label(file) == label, file_list)
         for seq_num, file in enumerate(category_files):
@@ -60,9 +60,9 @@ def get_class_number(video_file_name):
 
 def wrapFfmpegCmd(file_name, cls_num, seq_num, frame_rate=15):
     """Generates ffmpeg command to conver video into images"""
-    file_loc = os.path.join('datasets', DATA_PATH, VIDEO_PATH, file_name)
+    file_loc = os.path.join( DATA_PATH, VIDEO_PATH, file_name)
     gen_file_name = "%s_%s_" % (cls_num, seq_num) + "%d.png"
-    gen_file_loc = os.path.join('datasets', DATA_PATH, IMAGE_PATH, gen_file_name)
+    gen_file_loc = os.path.join( DATA_PATH, IMAGE_PATH, gen_file_name)
     command = "ffmpeg -i %s -r %s %s" % (file_loc, frame_rate, gen_file_loc)
     return command
 
@@ -70,9 +70,9 @@ def wrapFfmpegCmd(file_name, cls_num, seq_num, frame_rate=15):
 def load_data():
     data = []
     labels = []
-    file_names = os.listdir(os.path.join('datasets', DATA_PATH, IMAGE_PATH))
+    file_names = os.listdir(os.path.join( DATA_PATH, IMAGE_PATH))
     for file in file_names:
-        image = imread(os.path.join('datasets', DATA_PATH, IMAGE_PATH, file))
+        image = imread(os.path.join(DATA_PATH, IMAGE_PATH, file))
         image = cv2.resize(image, config.SIZE)
         if config.CHANNELS == 1:
             image = im2gray(image).reshape(*image.shape[:-1], 1)
