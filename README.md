@@ -1,4 +1,7 @@
+
 # human-activity-dih18
+[![ForTheBadge made-with-python](https://forthebadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+
 Human Activity Recognition Using Deep Neural Network
 
 Currently use Neural Network to classify Human Activities
