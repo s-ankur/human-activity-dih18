@@ -8,7 +8,8 @@ Currently use Neural Network to classify Human Activities
 We use 3 different types of models cnn2d cnn3d and lstm to classify human activites.
 Till now 2 different datasets are used. UCF101 and SDHA2010
 
-The project depends on keras, sklearn, opencv, tqdm, requests and their respective dependencies
+The project depends on keras, sklearn, opencv, tqdm, requests and their respective dependencies<br>
+Use `pip install -r requirements.txt` to install dependencies.
 
 To train, do the following 
  1. Edit the config[3d].py file to set the desired hyperparameters and select the `DATASET` as `ucf101` or `sdha2010`.
