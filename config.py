@@ -19,7 +19,7 @@ EXTRACT = False
 CHANCE = .05
 TEST_TRAIN_SPLIT = .2
 SIZE = (64, 64)
-CHANNELS = 3
+CHANNELS = 1
 BATCH_SIZE = 128
 EPOCHS = 30
 ############### CONFIG ##############
