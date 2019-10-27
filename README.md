@@ -27,9 +27,6 @@ To train, do the following
 To use 3d networks do the above steps with 3d.py files
  
 For actual live video demonstration we use a stacked yolo model to extract the roi for our models.
-To use demo,
- 1. Download the pretrained [yolo model](https://drive.google.com/open?id=1ecI2V5rx1_uZ3cMY6q9yNDujfQo_opn1) into the repo
- 2. Run `python demo.py`
  
 
 Do checkout
