@@ -3,7 +3,7 @@ requests>=2.20.0
 matplotlib==3.0.0
 imutils==0.5.1
 tensorflow==1.15.4
-opencv_python==3.4.3.18
+opencv_python==4.2.0.32
 numpy==1.15.2
 Pillow==7.1.0
 scikit_learn==0.20.0
